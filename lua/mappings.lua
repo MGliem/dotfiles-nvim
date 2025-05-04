@@ -259,7 +259,6 @@ map("n", "<C-n>", function()
   require("hover").hover_switch "next"
 end, { desc = "hover.nvim (next source)" })
 
-map("n", "<F12>", "<CMD>Glance references<CR>", { desc = "󰘐 References" })
 map("n", "<leader>gy", "<CMD>Glance type_definitions<CR>", { desc = "Type definition" })
 map("n", "<leader>gr", "<CMD>Glance references<CR>", { desc = "References" })
 map("n", "<leader>gm", "<CMD>Glance implementations<CR>", { desc = "Implementations" })

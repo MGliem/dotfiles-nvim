@@ -1,37 +1,31 @@
 local baseDefinitionHandler = vim.lsp.handlers["textDocument/definition"]
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 
-local filter = function(arr, fn)
-  if type(arr) ~= "table" then
-    return arr
-  end
-
-  local filtered = {}
-  for k, v in pairs(arr) do
-    if fn(v, k, arr) then
-      table.insert(filtered, v)
-    end
-  end
-
-  return filtered
-end
-
-local filterReactDTS = function(value)
-  if value.uri then
-    return string.match(value.uri, "%.d.ts") == nil
-  elseif value.targetUri then
-    return string.match(value.targetUri, "%.d.ts") == nil
-  end
+local shouldIgnoreFile = function(uri)
+  return uri and (string.match(uri, "node_modules") or string.match(uri, "%.d%.ts$"))
 end
 
 local handlers = {
   ["textDocument/definition"] = function(err, result, method, ...)
-    if vim.isList(result) and #result > 1 then
-      local filtered_result = filter(result, filterReactDTS)
-      return baseDefinitionHandler(err, filtered_result, method, ...)
+    if err then
+      vim.notify("LSP error: " .. err.message, vim.log.levels.ERROR)
+      return
     end
 
-    baseDefinitionHandler(err, result, method, ...)
+    if result and #result > 0 then
+      local filtered_result = {}
+      for _, item in ipairs(result) do
+        if not shouldIgnoreFile(item.uri or item.targetUri) then
+          table.insert(filtered_result, item)
+        end
+      end
+
+      if #filtered_result == 0 then
+        vim.notify("Lsp: node_modules and .d.ts ignored.", vim.log.levels.INFO)
+        return
+      end
+      return baseDefinitionHandler(err, filtered_result, method, ...)
+    end
   end,
   ["textDocument/foldingRange"] = function(err, result, ctx, config)
     if not err and result then
