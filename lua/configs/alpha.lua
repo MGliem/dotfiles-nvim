@@ -68,7 +68,7 @@ end
 
 dashboard.section.buttons.val = {
   buttonhl("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-  buttonhl("f", "󰈞  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
+  buttonhl("f", "󰈞  > Find file", ":Telescope find_files<CR>"),
   buttonhl("r", "  > Recent", ":Telescope oldfiles<CR>"),
   buttonhl("s", "  > Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
   buttonhl("w", "󰚰  > Change header image", function()

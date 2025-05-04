@@ -447,7 +447,6 @@ M.telescope = {
       " Find",
     },
     ["<leader>fu"] = { "<CMD>Telescope undo<CR>", " Undo tree" },
-    ["<leader>fg"] = { "<CMD>Telescope ast_grep<CR>", " Structural Search" },
     ["<leader>fre"] = {
       function()
         require("telescope").extensions.refactoring.refactors()
