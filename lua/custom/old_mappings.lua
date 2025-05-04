@@ -39,30 +39,6 @@ local diagnostic_ns = vim.api.nvim_create_namespace "hlyank"
 local diagnostic_timer
 local hl_cancel
 
-local function goto_diagnostic_hl(dir)
-  assert(dir == "prev" or dir == "next")
-  local pos = vim.diagnostic["get_" .. dir]()
-  if not pos then
-    return
-  end
-  if diagnostic_timer then
-    diagnostic_timer:close()
-    hl_cancel()
-  end
-  vim.api.nvim_buf_set_extmark(0, diagnostic_ns, pos.lnum, pos.col, {
-    end_row = pos.end_lnum,
-    end_col = pos.end_col,
-    hl_group = "Visual",
-  })
-  hl_cancel = function()
-    diagnostic_timer = nil
-    hl_cancel = nil
-    pcall(vim.api.nvim_buf_clear_namespace, 0, diagnostic_ns, 0, -1)
-  end
-  diagnostic_timer = vim.defer_fn(hl_cancel, 500)
-  vim.diagnostic["goto_" .. dir]()
-end
-
 -- local end_strings = {
 --   ";",
 --   ",",
@@ -356,21 +332,6 @@ M.general = {
         end
       end,
       " Close buffer",
-    },
-  },
-}
-
-M.diagnostics = {
-  n = {
-    ["<leader>t"] = { "<CMD>Trouble diagnostics toggle<CR>", "󰔫 Toggle warnings" },
-    ["<leader>td"] = { "<CMD>Trouble qflist toggle<CR>", " Todo/Fix/Fixme" },
-    ["<leader>el"] = { "<CMD>ErrorLensToggle<CR>", "󱇭 Toggle error lens" },
-    ["<leader>ft"] = { "<CMD>TodoTelescope<CR>", " Telescope TODO" },
-    ["<Leader>ll"] = {
-      function()
-        require("lsp_lines").toggle()
-      end,
-      " Toggle lsp_lines",
     },
   },
 }

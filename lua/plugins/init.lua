@@ -870,7 +870,7 @@ return {
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       }
-      require("telescope").load_extension("yank_history")
+      require("telescope").load_extension "yank_history"
     end,
   },
   ----------------------------------------- ui plugins ------------------------------------------
@@ -1216,14 +1216,14 @@ return {
             require("noice").cmd "history"
           end,
         },
-        {
-          ft = "neotest-output-panel",
-          title = " Test Output",
-          open = function()
-            vim.cmd.vsplit()
-            require("neotest").output_panel.toggle()
-          end,
-        },
+        -- {
+        --   ft = "neotest-output-panel",
+        --   title = " Test Output",
+        --   open = function()
+        --     vim.cmd.vsplit()
+        --     require("neotest").output_panel.toggle()
+        --   end,
+        -- },
         {
           ft = "DiffviewFileHistory",
           title = " Diffs",
@@ -1249,13 +1249,13 @@ return {
           ft = "DiffviewFiles",
           title = " Diffs",
         },
-        {
-          ft = "neotest-summary",
-          title = "  Tests",
-          open = function()
-            require("neotest").summary.toggle()
-          end,
-        },
+        -- {
+        --   ft = "neotest-summary",
+        --   title = "  Tests",
+        --   open = function()
+        --     require("neotest").summary.toggle()
+        --   end,
+        -- },
       },
       right = {
         "sagaoutline",

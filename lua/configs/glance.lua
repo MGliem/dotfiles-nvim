@@ -1,8 +1,4 @@
-local present, glance = pcall(require, "glance")
-
-if not present then
-  return
-end
+local glance = require "glance"
 
 local filter = function(arr, fn)
   if type(arr) ~= "table" then
@@ -19,29 +15,24 @@ local filter = function(arr, fn)
   return filtered
 end
 
-local filterReactDTS = function(value)
+local filterList = function(value)
   if value.uri then
-    return string.match(value.uri, "%.d.ts") == nil
+    return not string.match(value.uri, "node_modules")
   elseif value.targetUri then
-    return string.match(value.targetUri, "%.d.ts") == nil
+    return not string.match(value.targetUri, "node_modules")
   end
+  return true
 end
 
 glance.setup {
   hooks = {
     before_open = function(results, open, jump, method)
-      -- if #results == 1 then
-      --   jump(results[1])
-      if method == "definitions" then
-        results = filter(results, filterReactDTS)
-        -- if #results == 1 then
-        --   jump(results[1])
-        -- else
-          open(results)
-        -- end
-      else
-        open(results)
+      results = filter(results, filterList)
+      if #results == 0 then
+        vim.notify("No results.", vim.log.levels.INFO)
+        return
       end
+      open(results)
     end,
   },
 }
