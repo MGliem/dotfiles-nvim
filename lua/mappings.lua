@@ -255,7 +255,6 @@ map("n", "K", function()
 end, { desc = "hover.nvim" })
 
 map("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
-map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 map("n", "<C-n>", function()
   require("hover").hover_switch "next"
 end, { desc = "hover.nvim (next source)" })
@@ -347,6 +346,18 @@ keymap("n", "<c-n>", "<Plug>(YankyNextEntry)")
 
 -- Open links under cursor in browser with gx
 keymap("n", "gx", "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>", silent)
+
+------------------------------------------------- diagnostics ---------------------------------------------------
+
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+
+map("n", "<leader>tv", function()
+  vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
+end, { desc = "Toggle virtual text" })
+
+map("n", "<leader>tl", function()
+  vim.diagnostic.config { virtual_lines = not vim.diagnostic.config().virtual_lines }
+end, { desc = "Toggle virtual text" })
 
 keymap(
   "n",

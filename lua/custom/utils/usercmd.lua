@@ -66,7 +66,7 @@ create_cmd("UFOOpen", function()
 end, {})
 
 create_cmd("Http", function()
-  require('kulala').run()
+  require("kulala").run()
 end, {})
 
 --Open Peek
@@ -75,27 +75,12 @@ create_cmd("TPeek", function()
 end, {})
 
 create_cmd("ToggleInlayHints", function()
-  ---@diagnostic disable-next-line
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "Toogle inlay hints in current buffer" })
--- Command to toggle inline diagnostics
-create_cmd("ToggleVirtualText", function()
-  local current_value = vim.diagnostic.config().virtual_text
-  if current_value then
-    vim.diagnostic.config { virtual_text = false }
-  else
-    vim.diagnostic.config { virtual_text = true }
-  end
-end, {})
 
 -- Command to toggle diagnostics
 create_cmd("DiagnosticsToggle", function()
-  local current_value = vim.diagnostic.is_enabled()
-  if current_value then
-    vim.diagnostic.enable()
-  else
-    vim.diagnostic.enable(false)
-  end
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, {})
 
 create_cmd("Format", function(args)
