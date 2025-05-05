@@ -286,10 +286,10 @@ M.cmp = {
     --   name = "copilot",
     --   max_item_count = 2,
     -- },
-    {
-      name = "codeium",
-      max_item_count = 2,
-    },
+    -- {
+    --   name = "codeium",
+    --   max_item_count = 2,
+    -- },
     {
       name = "supermaven",
       max_item_count = 2,

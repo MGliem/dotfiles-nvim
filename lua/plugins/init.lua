@@ -246,13 +246,13 @@ return {
           require("supermaven-nvim.completion_preview").suggestion_group = "SupermavenSuggestion"
         end,
       },
-      {
-        "Exafunction/codeium.nvim",
-        config = function()
-          require("codeium").setup {
-            enable_chat = true,
-            virtual_text = {
-              enabled = false,
+      -- {
+      --   "Exafunction/codeium.nvim",
+      --   config = function()
+      --     require("codeium").setup {
+      --       enable_chat = true,
+      --       virtual_text = {
+      --         enabled = false,
               --
               -- -- These are the defaults
               --
@@ -288,10 +288,10 @@ return {
               --   -- Cycle to the previous completion.
               --   prev = "<C-w>",
               -- }
-            }, -- add any options here
-          }
-        end,
-      },
+            -- }, -- add any options here
+          -- }
+      --   end,
+      -- },
       {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
