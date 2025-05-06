@@ -5,25 +5,25 @@ require("nvim-treesitter.configs").setup {
     "javascript",
     "html",
     "css",
-    "java",
-    "vue",
-    "astro",
-    "svelte",
+    -- "java",
+    -- "vue",
+    -- "astro",
+    -- "svelte",
     "gitcommit",
-    "graphql",
+    -- "graphql",
     "json",
     "json5",
     "lua",
     "markdown",
     "markdown_inline",
-    "prisma",
+    -- "prisma",
     "vim",
   }, -- one of "all", or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { "haskell" }, -- list of parsers to ignore installing
   highlight = {
     enable = true,
-    disable = { "markdown", "markdown_inline" }, -- Désactive le highlight pour le markdown
+    -- disable = { "markdown", "markdown_inline" }, -- Désactive le highlight pour le markdown
     additional_vim_regex_highlighting = false, -- Évite les conflits avec d'autres highlighters
   },
   autotag = {
