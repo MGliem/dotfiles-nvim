@@ -115,7 +115,3 @@ dashboard.section.footer.opts.hl = "AlphaFooter"
 
 -- dashboard.opts.opts.noautocmd = true
 alpha.setup(dashboard.opts)
-
-vim.cmd [[
-    autocmd FileType alpha setlocal nofoldenable
-]]
