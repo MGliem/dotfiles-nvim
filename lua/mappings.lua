@@ -233,24 +233,16 @@ end, { desc = "󰤑 Run neotest" })
 map("n", "<leader>tc", "<cmd>CoverageToggle<cr>", { desc = "Coverage in gutter" })
 map("n", "<leader><leader>c", "<cmd>CoverageLoad<cr><cmd>CoverageSummary<cr>", { desc = "Coverage summary" })
 --------------------------------------------------- LSP ---------------------------------------------------
--- map("n", "<MouseMove>", require("hover").hover, { desc = "Hover" })
--- map(
---   "n",
---   "K",
---   -- local winid = require("ufo").peekFoldedLinesUnderCursor()
---   -- if not winid then
---   require("hover").hover,
---   -- end
---   { desc = "hover.nvim" }
--- )
-
 map("n", "K", function()
   local api = vim.api
   local hover_win = vim.b.hover_preview
   if hover_win and api.nvim_win_is_valid(hover_win) then
     api.nvim_set_current_win(hover_win)
   else
-    require("hover").hover()
+    local winid = require("ufo").peekFoldedLinesUnderCursor()
+    if not winid then
+      require("hover").hover()
+    end
   end
 end, { desc = "hover.nvim" })
 
