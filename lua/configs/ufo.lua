@@ -31,7 +31,7 @@ require("ufo").setup {
     default = {},
   },
   fold_virt_text_handler = handler,
-  open_fold_hl_timeout = 0,
+  open_fold_hl_timeout = 150,
   preview = {
     win_config = {
       border = "rounded",

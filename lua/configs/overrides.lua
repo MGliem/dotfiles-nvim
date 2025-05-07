@@ -316,7 +316,6 @@ M.mason = {
     "prettier",
     "eslint-lsp",
     "emmet-ls",
-    "vtsls",
 
     -- Spell
     "marksman",

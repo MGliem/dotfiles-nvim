@@ -61,10 +61,6 @@ create_cmd("DapUiFloatElement", ":lua require'dapui'.float_element()", {})
 create_cmd("DapUiWidget", ":lua require'dap.ui.widgets'.hover()", {})
 create_cmd("DapUiEval", ":lua require'dapui'.eval()", {})
 
-create_cmd("UFOOpen", function()
-  require("ufo").openAllFolds()
-end, {})
-
 create_cmd("Http", function()
   require("kulala").run()
 end, {})

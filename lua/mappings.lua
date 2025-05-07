@@ -247,23 +247,23 @@ map("n", "K", function()
 end, { desc = "hover.nvim" })
 
 map("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
-map("n", "<C-n>", function()
-  require("hover").hover_switch "next"
-end, { desc = "hover.nvim (next source)" })
-
 map("n", "<leader>gy", "<CMD>Glance type_definitions<CR>", { desc = "Type definition" })
 map("n", "<leader>gr", "<CMD>Glance references<CR>", { desc = "References" })
 map("n", "<leader>gm", "<CMD>Glance implementations<CR>", { desc = "Implementations" })
 map("n", "<leader>gd", "<CMD>Glance definitions<CR>", { desc = "Definitions" })
 
+-- Folding with UFO
+-- map('n', 'zO', require('ufo').openAllFolds, { desc = 'Open all folds' })
+-- map('n', 'zC', require('ufo').closeAllFolds, { desc = 'Close all folds' })
+
 -- vim.api.nvim_set_keymap('n', '<RightMouse>', '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>', { noremap=true, silent=true })
 
 -- use gh to move to the beginning of the line in normal mode
 -- use gl to move to the end of the line in normal mode
--- map({ "n", "v" }, "gh", "^", { desc = "[P]Go to the beginning line" })
--- map({ "n", "v" }, "gl", "$", { desc = "[P]go to the end of the line" })
+map({ "n", "v" }, "gh", "^", { desc = "[P]Go to the beginning line" })
+map({ "n", "v" }, "gl", "$", { desc = "[P]go to the end of the line" })
 -- In visual mode, after going to the end of the line, come back 1 character
--- map("v", "gl", "$h", { desc = "[P]Go to the end of the line" })
+map("v", "gl", "$h", { desc = "[P]Go to the end of the line" })
 
 -- add yours here
 local keymap = vim.keymap.set
