@@ -62,9 +62,9 @@ return {
       -- "artemave/workspace-diagnostics.nvim",
       "jubnzv/virtual-types.nvim",
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         dependencies = {
-          "williamboman/mason-lspconfig.nvim",
+          "mason-org/mason-lspconfig.nvim",
         },
         opts = overrides.mason,
         config = function(_, opts)
@@ -405,7 +405,7 @@ return {
     },
     keys = {
       {
-        "z",
+        "<leader>z",
         mode = { "n", "x", "o" },
         function()
           require("flash").jump {
@@ -1075,7 +1075,7 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    lazy = false,
+    event = "VeryLazy",
     dependencies = "kevinhwang91/promise-async",
     config = function()
       require "configs.ufo"

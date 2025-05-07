@@ -16,8 +16,6 @@ local capabilities = vim.tbl_deep_extend(
   require("nvchad.configs.lspconfig").capabilities
 )
 
-local lspconfig = require "lspconfig"
-
 local present, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if present then
   capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
@@ -107,90 +105,90 @@ end
 -- Running "Go to definition" on `MyComponent` would give the `React.FC`
 -- definition in `node_modules/react` as the first result, but we don't want
 -- that.
--- local function filter_out_libraries_from_lsp_items(results)
---   local without_node_modules = vim.tbl_filter(function(item)
---     return item.targetUri and not string.match(item.targetUri, "node_modules")
---   end, results)
---
---   if #without_node_modules > 0 then
---     return without_node_modules
---   end
---
---   return results
--- end
+local function filter_out_libraries_from_lsp_items(results)
+  local without_node_modules = vim.tbl_filter(function(item)
+    return item.targetUri and not string.match(item.targetUri, "node_modules")
+  end, results)
 
--- local function filter_out_same_location_from_lsp_items(results)
---   return vim.tbl_filter(function(item)
---     local from = item.originSelectionRange
---     local to = item.targetSelectionRange
---
---     return not (
---       from
---       and from.start.character == to.start.character
---       and from.start.line == to.start.line
---       and from["end"].character == to["end"].character
---       and from["end"].line == to["end"].line
---     )
---   end, results)
--- end
+  if #without_node_modules > 0 then
+    return without_node_modules
+  end
+
+  return results
+end
+
+local function filter_out_same_location_from_lsp_items(results)
+  return vim.tbl_filter(function(item)
+    local from = item.originSelectionRange
+    local to = item.targetSelectionRange
+
+    return not (
+      from
+      and from.start.character == to.start.character
+      and from.start.line == to.start.line
+      and from["end"].character == to["end"].character
+      and from["end"].line == to["end"].line
+    )
+  end, results)
+end
 
 -- This function is mostly copied from Telescope, I only added the
 -- `node_modules` filtering.
--- local function list_or_jump(action, title, opts)
---   opts = opts or {}
---
---   local params = vim.lsp.util.make_position_params()
---   vim.lsp.buf_request(0, action, params, function(err, result, ctx, _)
---     if err then
---       vim.notify("Error when executing " .. action .. " : " .. err.message, vim.log.levels.ERROR)
---       return
---     end
---     local flattened_results = {}
---     if result then
---       -- textDocument/definition can return Location or Location[]
---       if not vim.islist(result) then
---         flattened_results = { result }
---       end
---
---       vim.list_extend(flattened_results, result)
---     end
---
---     -- This is the only added step to the Telescope function
---     flattened_results = filter_out_same_location_from_lsp_items(filter_out_libraries_from_lsp_items(flattened_results))
---
---     local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
---
---     if #flattened_results == 0 then
---       return
---     elseif #flattened_results == 1 and opts.jump_type ~= "never" then
---       if opts.jump_type == "tab" then
---         vim.cmd.tabedit()
---       elseif opts.jump_type == "split" then
---         vim.cmd.new()
---       elseif opts.jump_type == "vsplit" then
---         vim.cmd.vnew()
---       end
---       vim.lsp.util.jump_to_location(flattened_results[1], offset_encoding)
---     else
---       local locations = vim.lsp.util.locations_to_items(flattened_results, offset_encoding)
---       pickers
---         .new(opts, {
---           prompt_title = title,
---           finder = finders.new_table {
---             results = locations,
---             entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
---           },
---           previewer = conf.qflist_previewer(opts),
---           sorter = conf.generic_sorter(opts),
---         })
---         :find()
---     end
---   end)
--- end
---
--- local function definitions(opts)
---   return list_or_jump("textDocument/definition", "LSP Definitions", opts)
--- end
+local function list_or_jump(action, title, opts)
+  opts = opts or {}
+
+  local params = vim.lsp.util.make_position_params()
+  vim.lsp.buf_request(0, action, params, function(err, result, ctx, _)
+    if err then
+      vim.notify("Error when executing " .. action .. " : " .. err.message, vim.log.levels.ERROR)
+      return
+    end
+    local flattened_results = {}
+    if result then
+      -- textDocument/definition can return Location or Location[]
+      if not vim.islist(result) then
+        flattened_results = { result }
+      end
+
+      vim.list_extend(flattened_results, result)
+    end
+
+    -- This is the only added step to the Telescope function
+    flattened_results = filter_out_same_location_from_lsp_items(filter_out_libraries_from_lsp_items(flattened_results))
+
+    local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+
+    if #flattened_results == 0 then
+      return
+    elseif #flattened_results == 1 and opts.jump_type ~= "never" then
+      if opts.jump_type == "tab" then
+        vim.cmd.tabedit()
+      elseif opts.jump_type == "split" then
+        vim.cmd.new()
+      elseif opts.jump_type == "vsplit" then
+        vim.cmd.vnew()
+      end
+      vim.lsp.util.jump_to_location(flattened_results[1], offset_encoding)
+    else
+      local locations = vim.lsp.util.locations_to_items(flattened_results, offset_encoding)
+      pickers
+        .new(opts, {
+          prompt_title = title,
+          finder = finders.new_table {
+            results = locations,
+            entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+          },
+          previewer = conf.qflist_previewer(opts),
+          sorter = conf.generic_sorter(opts),
+        })
+        :find()
+    end
+  end)
+end
+
+local function definitions(opts)
+  return list_or_jump("textDocument/definition", "LSP Definitions", opts)
+end
 
 -- if you just want default config for the servers then put them in a table
 local servers = {
@@ -200,7 +198,6 @@ local servers = {
   "html",
   "jsonls",
   "lua_ls",
-  -- "ts_ls",
 }
 
 vim.lsp.handlers["textDocument/hover"] = require("noice").hover
@@ -231,268 +228,166 @@ end
 
 require("mason-lspconfig").setup {
   ensure_installed = servers,
-  automatic_installation = true,
+  automatic_enable = false,
 }
 
--- for _, lsp in ipairs(servers) do
---   lspconfig[lsp].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---   }
--- end
+vim.lsp.config("jsonls", {
+  on_attach = custom_on_attach,
+  -- capabilities = capabilities,
+  settings = {
+    json = {
+      schemas = require("schemastore").json.schemas(),
+      validate = { enable = true },
+    },
+  },
+})
 
-require("mason-lspconfig").setup_handlers {
-  function(server_name)
-    lspconfig[server_name].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
-  end,
-
-  ["jsonls"] = function()
-    lspconfig["jsonls"].setup {
-      on_attach = custom_on_attach,
-      -- capabilities = capabilities,
-      settings = {
-        json = {
-          schemas = require("schemastore").json.schemas(),
-          validate = { enable = true },
-        },
+vim.lsp.config("lua_ls", {
+  on_attach = custom_on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
       },
-    }
-  end,
-
-  -- ["terraformls"] = function()
-  --   lspconfig["terraformls"].setup {
-  --     on_attach = custom_on_attach,
-  --     capabilities = capabilities,
-  --   }
-  -- end,
-
-  -- disable tsserver
-  -- ["ts_ls"] = function() end,
-
-  ["lua_ls"] = function()
-    lspconfig["lua_ls"].setup {
-      on_attach = custom_on_attach,
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          runtime = {
-            version = "LuaJIT",
-          },
-          diagnostics = {
-            globals = { "use", "vim" },
-          },
-          hint = {
-            enable = true,
-            setType = true,
-          },
-          telemetry = {
-            enable = false,
-          },
-          workspace = {
-            library = {
-              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-              [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-              [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-              [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-            },
-            maxPreload = 100000,
-            preloadFileSize = 10000,
-          },
-        },
+      diagnostics = {
+        globals = { "use", "vim" },
       },
-    }
-  end,
-
-  ["eslint"] = function()
-    lspconfig["eslint"].setup {
-      codeAction = {
-        disableRuleComment = {
-          enable = true,
-          location = "separateLine",
-        },
-        showDocumentation = {
-          enable = true,
-        },
+      hint = {
+        enable = true,
+        setType = true,
       },
-      codeActionOnSave = {
+      telemetry = {
         enable = false,
-        mode = "all",
       },
-      format = true,
-      nodePath = "",
-      onIgnoredFiles = "off",
-      packageManager = "npm",
-      quiet = false,
-      rulesCustomizations = {},
-      run = "onType",
-      useESLintClass = false,
-      validate = "on",
-      workingDirectory = {
-        mode = "location",
-      },
-      flags = {
-        allow_incremental_sync = false,
-        debounce_text_changes = 200,
-      },
-      dynamicRegistration = true,
-      on_attach = custom_on_attach,
-      -- capabilities = capabilities,
-      filetypes = {
-        "javascript",
-        "javascriptreact",
-        "javascript.jsx",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
-        "vue",
-        "astro",
-      },
-      cmd = { "vscode-eslint-language-server", "--stdio" },
-      handlers = {
-        ["eslint/confirmESLintExecution"] = function(_, result)
-          if not result then
-            return
-          end
-          return 4 -- approved
-        end,
-
-        ["eslint/noLibrary"] = function()
-          vim.notify("[lspconfig] Unable to find ESLint library.", vim.log.levels.WARN)
-          return {}
-        end,
-
-        ["eslint/openDoc"] = function(_, result)
-          if not result then
-            return
-          end
-          local sysname = vim.loop.os_uname().sysname
-          if sysname:match "Windows_NT" then
-            os.execute(string.format("start %q", result.url))
-          elseif sysname:match "Linux" then
-            os.execute(string.format("xdg-open %q", result.url))
-          else
-            os.execute(string.format("open %q", result.url))
-          end
-          return {}
-        end,
-
-        ["eslint/probeFailed"] = function()
-          vim.notify("[lspconfig] ESLint probe failed.", vim.log.levels.WARN)
-          return {}
-        end,
-      },
-      root_dir = require("lspconfig").util.root_pattern(
-        ".eslintrc",
-        ".eslintrc.js",
-        ".eslintrc.cjs",
-        ".eslintrc.yaml",
-        ".eslintrc.yml",
-        ".eslintrc.json",
-        "package.json"
-      ),
-      settings = {
-        codeAction = {
-          disableRuleComment = {
-            enable = true,
-            location = "separateLine",
-          },
-          showDocumentation = {
-            enable = true,
-          },
+      workspace = {
+        library = {
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+          [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
+          [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
         },
-        codeActionOnSave = {
-          enable = false,
-          mode = "all",
-        },
-        format = true,
-        nodePath = "",
-        onIgnoredFiles = "off",
-        packageManager = "npm",
-        quiet = false,
-        rulesCustomizations = {},
-        run = "onType",
-        useESLintClass = false,
-        validate = "on",
-        workingDirectory = {
-          mode = "location",
-        },
+        maxPreload = 100000,
+        preloadFileSize = 10000,
       },
-    }
-  end,
+    },
+  },
+})
 
-  -- ["vtsls"] = function()
-  --   lspconfig["vtsls"].setup {
-  --     on_attach = custom_on_attach,
-  --     capabilities = capabilities,
-  --     filetypes = {
-  --       "javascript",
-  --       "javascriptreact",
-  --       "javascript.jsx",
-  --       "typescript",
-  --       "typescriptreact",
-  --       "typescript.tsx",
-  --       "astro",
-  --     },
-  --     flags = {
-  --       allow_incremental_sync = false,
-  --       debounce_text_changes = 200,
-  --     },
-  --     settings = {
-  --       complete_function_calls = true,
-  --       vtsls = {
-  --         enableMoveToFileCodeAction = true,
-  --         autoUseWorkspaceTsdk = true,
-  --         experimental = {
-  --           completion = {
-  --             enableServerSideFuzzyMatch = true,
-  --             entriesLimit = 50,
-  --           },
-  --         },
-  --       },
-  --       javascript = {
-  --         updateImportsOnFileMove = { enabled = "always" },
-  --         suggest = { completeFunctionCalls = true },
-  --         importModuleSpecifier = "project-relative",
-  --       },
-  --       typescript = {
-  --         tsserver = {
-  --           maxTsServerMemory = 4096,
-  --           -- watchOptions = {
-  --           --   watchFile = "dynamicPriorityPolling",
-  --           --   watchDirectory = "dynamicPriorityPolling",
-  --           --   fallbackPolling = "priorityPollingInterval",
-  --           -- },
-  --           -- useSeparateSyntaxServer = false,
-  --           -- useSyntaxServer = "never",
-  --         },
-  --         format = {
-  --           indentSize = vim.o.shiftwidth,
-  --           convertTabsToSpaces = vim.o.expandtab,
-  --           tabSize = vim.o.tabstop,
-  --         },
-  --         preferences = {
-  --           importModuleSpecifier = "project-relative",
-  --           includePackageJsonAutoImports = "off",
-  --           autoImportFileExcludePatterns = { ".git" },
-  --         },
-  --         updateImportsOnFileMove = { enabled = "always" },
-  --         suggest = { completeFunctionCalls = true },
-  --         inlayHints = {
-  --           enumMemberValues = { enabled = true },
-  --           functionLikeReturnTypes = { enabled = false },
-  --           parameterNames = { enabled = "all" },
-  --           parameterTypes = { enabled = false },
-  --           propertyDeclarationTypes = { enabled = true },
-  --           variableTypes = { enabled = false },
-  --         },
-  --       },
-  --     },
-  --   }
-  -- end,
-}
+vim.lsp.config("eslint", {
+  codeAction = {
+    disableRuleComment = {
+      enable = true,
+      location = "separateLine",
+    },
+    showDocumentation = {
+      enable = true,
+    },
+  },
+  codeActionOnSave = {
+    enable = false,
+    mode = "all",
+  },
+  format = true,
+  nodePath = "",
+  onIgnoredFiles = "off",
+  packageManager = "npm",
+  quiet = false,
+  rulesCustomizations = {},
+  run = "onType",
+  useESLintClass = false,
+  validate = "on",
+  workingDirectory = {
+    mode = "location",
+  },
+  flags = {
+    allow_incremental_sync = false,
+    debounce_text_changes = 200,
+  },
+  dynamicRegistration = true,
+  on_attach = custom_on_attach,
+  capabilities = capabilities,
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+    "vue",
+    "astro",
+  },
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  handlers = {
+    ["eslint/confirmESLintExecution"] = function(_, result)
+      if not result then
+        return
+      end
+      return 4 -- approved
+    end,
+
+    ["eslint/noLibrary"] = function()
+      vim.notify("[lspconfig] Unable to find ESLint library.", vim.log.levels.WARN)
+      return {}
+    end,
+
+    ["eslint/openDoc"] = function(_, result)
+      if not result then
+        return
+      end
+      local sysname = vim.loop.os_uname().sysname
+      if sysname:match "Windows_NT" then
+        os.execute(string.format("start %q", result.url))
+      elseif sysname:match "Linux" then
+        os.execute(string.format("xdg-open %q", result.url))
+      else
+        os.execute(string.format("open %q", result.url))
+      end
+      return {}
+    end,
+
+    ["eslint/probeFailed"] = function()
+      vim.notify("[lspconfig] ESLint probe failed.", vim.log.levels.WARN)
+      return {}
+    end,
+  },
+  root_dir = require("lspconfig").util.root_pattern(
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.yaml",
+    ".eslintrc.yml",
+    ".eslintrc.json",
+    "package.json"
+  ),
+  settings = {
+    codeAction = {
+      disableRuleComment = {
+        enable = true,
+        location = "separateLine",
+      },
+      showDocumentation = {
+        enable = true,
+      },
+    },
+    codeActionOnSave = {
+      enable = false,
+      mode = "all",
+    },
+    format = true,
+    nodePath = "",
+    onIgnoredFiles = "off",
+    packageManager = "npm",
+    quiet = false,
+    rulesCustomizations = {},
+    run = "onType",
+    useESLintClass = false,
+    validate = "on",
+    workingDirectory = {
+      mode = "location",
+    },
+  },
+})
 
 vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx, _)
   if err or not result or not ctx or not ctx.bufnr or not vim.api.nvim_buf_is_valid(ctx.bufnr) then
