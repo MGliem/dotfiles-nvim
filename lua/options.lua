@@ -96,7 +96,7 @@ opt.concealcursor = "" --- Set to an empty string to expand tailwind class when 
 
 -- Folds
 opt.foldenable = true
-opt.foldcolumn = "1" -- show foldcolumn in nvim 0.9
+opt.foldcolumn = "1"
 opt.foldnestmax = 0
 opt.foldlevel = 99
 opt.foldlevelstart = 99

@@ -27,16 +27,6 @@ local handlers = {
       return baseDefinitionHandler(err, filtered_result, method, ...)
     end
   end,
-  ["textDocument/foldingRange"] = function(err, result, ctx, config)
-    if not err and result then
-      for _, r in pairs(result) do
-        if r.startLine == r.endLine then
-          r.kind = "region"
-        end
-      end
-    end
-    vim.lsp.handlers["textDocument/foldingRange"](err, result, ctx, config)
-  end,
 }
 
 local custom_on_attach = function(client, bufnr)
@@ -110,7 +100,7 @@ require("typescript-tools").setup {
     tsserver_max_memory = 4096,
     -- code_lens = "all",
     jsx_close_tag = {
-      enable = false,
+      enable = true,
       filetypes = { "javascriptreact", "typescriptreact" },
     },
     typescript = {

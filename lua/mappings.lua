@@ -253,8 +253,8 @@ map("n", "<leader>gm", "<CMD>Glance implementations<CR>", { desc = "Implementati
 map("n", "<leader>gd", "<CMD>Glance definitions<CR>", { desc = "Definitions" })
 
 -- Folding with UFO
--- map('n', 'zO', require('ufo').openAllFolds, { desc = 'Open all folds' })
--- map('n', 'zC', require('ufo').closeAllFolds, { desc = 'Close all folds' })
+map("n", "zO", require("ufo").openAllFolds, { desc = "Open all folds" })
+map("n", "zC", require("ufo").closeAllFolds, { desc = "Close all folds" })
 
 -- vim.api.nvim_set_keymap('n', '<RightMouse>', '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>', { noremap=true, silent=true })
 
