@@ -39,8 +39,46 @@ local handlers = {
   end,
 }
 
+local custom_on_attach = function(client, bufnr)
+  on_attach(client, bufnr)
+
+  -- Check if Glance is available
+  local ok, _ = pcall(require, "glance")
+  if not ok then
+    vim.notify("Glance is not installed", vim.log.levels.WARN)
+    return
+  end
+
+  -- Define keymaps with descriptions
+  local opts = { buffer = bufnr, desc = "Glance: " }
+  vim.keymap.set(
+    "n",
+    "gd",
+    "<CMD>Glance definitions<CR>",
+    vim.tbl_extend("force", opts, { desc = "Glance: Go to definition" })
+  )
+  vim.keymap.set(
+    "n",
+    "gy",
+    "<CMD>Glance type_definitions<CR>",
+    vim.tbl_extend("force", opts, { desc = "Glance: Go to type definition" })
+  )
+  vim.keymap.set(
+    "n",
+    "gr",
+    "<CMD>Glance references<CR>",
+    vim.tbl_extend("force", opts, { desc = "Glance: Find references" })
+  )
+  vim.keymap.set(
+    "n",
+    "gm",
+    "<CMD>Glance implementations<CR>",
+    vim.tbl_extend("force", opts, { desc = "Glance: Go to implementation" })
+  )
+end
+
 require("typescript-tools").setup {
-  on_attach = on_attach,
+  on_attach = custom_on_attach,
   handlers = handlers,
 
   settings = {
