@@ -187,10 +187,10 @@ return {
     end,
   },
   { "mbbill/undotree", lazy = false, cmd = "UndotreeToggle" },
-  {
-    "NvChad/nvim-colorizer.lua",
-    enabled = false,
-  },
+  -- {
+  --   "NvChad/nvim-colorizer.lua",
+  --   enabled = false,
+  -- },
   {
     "brenoprata10/nvim-highlight-colors",
     event = { "CursorHold", "CursorMoved" },
