@@ -573,11 +573,11 @@ return {
     "smoka7/multicursors.nvim",
     cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
     opts = {
-      updatetime = 10,
-      hint_config = false,
+      -- updatetime = 10,
+      -- hint_config = false,
     },
     dependencies = {
-      "smoka7/hydra.nvim",
+      "nvimtools/hydra.nvim",
     },
   },
   {
