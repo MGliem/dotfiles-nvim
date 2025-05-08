@@ -190,16 +190,6 @@ local function definitions(opts)
   return list_or_jump("textDocument/definition", "LSP Definitions", opts)
 end
 
--- if you just want default config for the servers then put them in a table
-local servers = {
-  "bashls",
-  "cssls",
-  "eslint",
-  "html",
-  "jsonls",
-  "lua_ls",
-}
-
 vim.lsp.handlers["textDocument/hover"] = require("noice").hover
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
   if err or not result or not ctx then
@@ -226,9 +216,18 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx,
   vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
 end
 
+local servers = {
+  "bashls",
+  "cssls",
+  "eslint",
+  "html",
+  "jsonls",
+  "lua_ls",
+}
+
 require("mason-lspconfig").setup {
   ensure_installed = servers,
-  automatic_enable = false,
+  automatic_enable = true,
 }
 
 vim.lsp.config("jsonls", {
@@ -407,14 +406,14 @@ end
 
 require("lspconfig.ui.windows").default_options.border = "rounded"
 
-local signs = { Error = "", Warn = "", Hint = "󰌵", Info = "" }
+-- local signs = { Error = "", Warn = "", Hint = "󰌵", Info = "" }
+--
+-- for type, icon in pairs(signs) do
+--   local hl = "Diagnostic" .. type
+--   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+-- end
 
-for type, icon in pairs(signs) do
-  local hl = "Diagnostic" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
--- local x = vim.diagnostic.severity
+local x = vim.diagnostic.severity
 vim.diagnostic.config {
 
   virtual_lines = false,
@@ -423,158 +422,158 @@ vim.diagnostic.config {
   --   spacing = 2,
   -- },
   virtual_text = false,
-  -- float = {
-  --   border = "rounded",
-  --   format = function(diagnostic)
-  --     if diagnostic.source == "eslint" then
-  --       return string.format(
-  --         "%s [%s]",
-  --         diagnostic.message,
-  --         -- shows the name of the rule
-  --         diagnostic.user_data.lsp.code
-  --       )
-  --     end
-  --
-  --     local message = diagnostic.message
-  --
-  --     if diagnostic.source then
-  --       message = string.format("%s %s", diagnostic.message, diagnostic.source)
-  --     end
-  --     if diagnostic.code then
-  --       message = string.format("%s[%s]", diagnostic.message, diagnostic.code)
-  --     end
-  --
-  --     return message
-  --   end,
-  --   suffix = function()
-  --     return ""
-  --   end,
-  --   severity_sort = true,
-  --   close_events = { "CursorMoved", "InsertEnter" },
-  -- },
-  -- signs = { text = { [x.ERROR] = "󰅙", [x.WARN] = "", [x.INFO] = "󰋼", [x.HINT] = "󰌵" } },
+  float = {
+    border = "rounded",
+    format = function(diagnostic)
+      if diagnostic.source == "eslint" then
+        return string.format(
+          "%s [%s]",
+          diagnostic.message,
+          -- shows the name of the rule
+          diagnostic.user_data.lsp.code
+        )
+      end
+
+      local message = diagnostic.message
+
+      if diagnostic.source then
+        message = string.format("%s %s", diagnostic.message, diagnostic.source)
+      end
+      if diagnostic.code then
+        message = string.format("%s[%s]", diagnostic.message, diagnostic.code)
+      end
+
+      return message
+    end,
+    suffix = function()
+      return ""
+    end,
+    severity_sort = true,
+    close_events = { "CursorMoved", "InsertEnter" },
+  },
+  signs = { text = { [x.ERROR] = "󰅙", [x.WARN] = "", [x.INFO] = "󰋼", [x.HINT] = "󰌵" } },
   underline = true,
   update_in_insert = false,
-  -- severity_sort = true,
+  severity_sort = true,
 }
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(event)
-    -- Set up keymaps
-    local opts = { buffer = event.buf, silent = true }
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-    vim.keymap.set("n", "<c-}>", function()
-      definitions()
-    end, opts)
-
-    -- Mouse mappings for easily navigating code
-    -- if client.supports_method "definitionProvider" then
-    --   vim.keymap.set("n", "<RightMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    -- end
-  end,
-})
-
-local function best_diagnostic(diagnostics)
-  if vim.tbl_isempty(diagnostics) then
-    return
-  end
-
-  local best = nil
-  local line_diagnostics = {}
-  local line_nr = vim.api.nvim_win_get_cursor(0)[1] - 1
-
-  for k, v in pairs(diagnostics) do
-    if v.lnum == line_nr then
-      line_diagnostics[k] = v
-    end
-  end
-
-  for _, diagnostic in ipairs(line_diagnostics) do
-    if best == nil then
-      best = diagnostic
-    elseif diagnostic.severity < best.severity then
-      best = diagnostic
-    end
-  end
-
-  return best
-end
-
-local function current_line_diagnostics()
-  local bufnr = 0
-  local line_nr = vim.api.nvim_win_get_cursor(0)[1] - 1
-  local opts = { ["lnum"] = line_nr }
-
-  return vim.diagnostic.get(bufnr, opts)
-end
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+--   callback = function(event)
+--     -- Set up keymaps
+--     local opts = { buffer = event.buf, silent = true }
+--     local client = vim.lsp.get_client_by_id(event.data.client_id)
 --
-local virt_handler = vim.diagnostic.handlers.virtual_text
-local ns = vim.api.nvim_create_namespace "current_line_virt"
-local severity = vim.diagnostic.severity
-local virt_options = {
-  prefix = "",
-  format = function(diagnostic)
-    local message = vim.split(diagnostic.message, "\n")[1]
-
-    if diagnostic.severity == severity.ERROR then
-      return signs.Error .. message
-    elseif diagnostic.severity == severity.INFO then
-      return signs.Info .. message
-    elseif diagnostic.severity == severity.WARN then
-      return signs.Warn .. message
-    elseif diagnostic.severity == severity.HINT then
-      return signs.Hint .. message
-    else
-      return message
-    end
-  end,
-}
+--     vim.keymap.set("n", "<c-}>", function()
+--       definitions()
+--     end, opts)
 --
-vim.diagnostic.handlers.current_line_virt = {
-  show = function(_, bufnr, diagnostics, _)
-    local diagnostic = best_diagnostic(diagnostics)
-    if not diagnostic then
-      return
-    end
-
-    local filtered_diagnostics = { diagnostic }
-
-    virt_handler.hide(ns, vim.api.nvim_get_current_buf())
-    pcall(virt_handler.show, ns, bufnr, filtered_diagnostics, { virtual_text = virt_options })
-  end,
-  hide = function(_, bufnr)
-    bufnr = bufnr or vim.api.nvim_get_current_buf()
-    virt_handler.hide(ns, bufnr)
-  end,
-}
-
-vim.api.nvim_create_augroup("lsp_diagnostic_current_line", {
-  clear = true,
-})
-
-vim.api.nvim_clear_autocmds {
-  group = "lsp_diagnostic_current_line",
-}
-
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  group = "lsp_diagnostic_current_line",
-  callback = function()
-    vim.diagnostic.handlers.current_line_virt.show(nil, 0, current_line_diagnostics(), nil)
-  end,
-})
-
-local line = nil
-vim.api.nvim_create_autocmd("CursorMoved", {
-  group = "lsp_diagnostic_current_line",
-  callback = function()
-    local next_line = vim.api.nvim_win_get_cursor(0)[1] - 1
-
-    if line ~= next_line then
-      line = next_line
-      vim.diagnostic.handlers.current_line_virt.hide(nil, nil)
-    end
-  end,
-})
+--     -- Mouse mappings for easily navigating code
+--     -- if client.supports_method "definitionProvider" then
+--     --   vim.keymap.set("n", "<RightMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", opts)
+--     -- end
+--   end,
+-- })
+--
+-- local function best_diagnostic(diagnostics)
+--   if vim.tbl_isempty(diagnostics) then
+--     return
+--   end
+--
+--   local best = nil
+--   local line_diagnostics = {}
+--   local line_nr = vim.api.nvim_win_get_cursor(0)[1] - 1
+--
+--   for k, v in pairs(diagnostics) do
+--     if v.lnum == line_nr then
+--       line_diagnostics[k] = v
+--     end
+--   end
+--
+--   for _, diagnostic in ipairs(line_diagnostics) do
+--     if best == nil then
+--       best = diagnostic
+--     elseif diagnostic.severity < best.severity then
+--       best = diagnostic
+--     end
+--   end
+--
+--   return best
+-- end
+--
+-- local function current_line_diagnostics()
+--   local bufnr = 0
+--   local line_nr = vim.api.nvim_win_get_cursor(0)[1] - 1
+--   local opts = { ["lnum"] = line_nr }
+--
+--   return vim.diagnostic.get(bufnr, opts)
+-- end
+-- --
+-- local virt_handler = vim.diagnostic.handlers.virtual_text
+-- local ns = vim.api.nvim_create_namespace "current_line_virt"
+-- local severity = vim.diagnostic.severity
+-- local virt_options = {
+--   prefix = "",
+--   format = function(diagnostic)
+--     local message = vim.split(diagnostic.message, "\n")[1]
+--
+--     if diagnostic.severity == severity.ERROR then
+--       return signs.Error .. message
+--     elseif diagnostic.severity == severity.INFO then
+--       return signs.Info .. message
+--     elseif diagnostic.severity == severity.WARN then
+--       return signs.Warn .. message
+--     elseif diagnostic.severity == severity.HINT then
+--       return signs.Hint .. message
+--     else
+--       return message
+--     end
+--   end,
+-- }
+-- --
+-- vim.diagnostic.handlers.current_line_virt = {
+--   show = function(_, bufnr, diagnostics, _)
+--     local diagnostic = best_diagnostic(diagnostics)
+--     if not diagnostic then
+--       return
+--     end
+--
+--     local filtered_diagnostics = { diagnostic }
+--
+--     virt_handler.hide(ns, vim.api.nvim_get_current_buf())
+--     pcall(virt_handler.show, ns, bufnr, filtered_diagnostics, { virtual_text = virt_options })
+--   end,
+--   hide = function(_, bufnr)
+--     bufnr = bufnr or vim.api.nvim_get_current_buf()
+--     virt_handler.hide(ns, bufnr)
+--   end,
+-- }
+--
+-- vim.api.nvim_create_augroup("lsp_diagnostic_current_line", {
+--   clear = true,
+-- })
+--
+-- vim.api.nvim_clear_autocmds {
+--   group = "lsp_diagnostic_current_line",
+-- }
+--
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+--   group = "lsp_diagnostic_current_line",
+--   callback = function()
+--     vim.diagnostic.handlers.current_line_virt.show(nil, 0, current_line_diagnostics(), nil)
+--   end,
+-- })
+--
+-- local line = nil
+-- vim.api.nvim_create_autocmd("CursorMoved", {
+--   group = "lsp_diagnostic_current_line",
+--   callback = function()
+--     local next_line = vim.api.nvim_win_get_cursor(0)[1] - 1
+--
+--     if line ~= next_line then
+--       line = next_line
+--       vim.diagnostic.handlers.current_line_virt.hide(nil, nil)
+--     end
+--   end,
+-- })
 -- require("lspconfig.configs").vtsls = require("vtsls").lspconfig
