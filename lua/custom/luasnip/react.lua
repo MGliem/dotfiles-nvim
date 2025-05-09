@@ -45,7 +45,7 @@ ls.add_snippets("typescriptreact", {
     "comp",
     fmt(
       [[
-{}type {}Props {{
+{}type {}Props = {{
   {}
 }}
 
