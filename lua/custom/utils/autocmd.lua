@@ -169,18 +169,18 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end,
 })
 
-autocmd("FileType", {
-  desc = "Close NvimTree before quit nvim",
-  pattern = { "NvimTree" },
-  callback = function(args)
-    autocmd("VimLeavePre", {
-      callback = function()
-        vim.api.nvim_buf_delete(args.buf, { force = true })
-        return true
-      end,
-    })
-  end,
-})
+-- autocmd("FileType", {
+--   desc = "Close NvimTree before quit nvim",
+--   pattern = { "NvimTree" },
+--   callback = function(args)
+--     autocmd("VimLeavePre", {
+--       callback = function()
+--         vim.api.nvim_buf_delete(args.buf, { force = true })
+--         return true
+--       end,
+--     })
+--   end,
+-- })
 
 autocmd("BufEnter", {
   desc = "Open new buffer if only Nvimtree is open",
