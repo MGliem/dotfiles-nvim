@@ -116,95 +116,85 @@ M.devicons = {
 }
 
 M.treesitter = {
+  auto_install = true,
+  highlight = { enable = true, disable = { "dockerfile" } },
   ensure_installed = {
-    "tsx",
-    "typescript",
-    "javascript",
-    "html",
-    "css",
-    "gitcommit",
-    "json",
-    "json5",
+    "vim",
     "lua",
     "luadoc",
-    "markdown",
-    "vim",
-  }, -- one of "all", or a list of languages
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = { "haskell" }, -- list of parsers to ignore installing
-  highlight = {
-    enable = true,
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-    -- additional_vim_regex_highlighting = false f,
-  },
-  autotag = {
-    enable = true,
-  },
+    "bash",
+    "json",
+    "json5",
+    "jq",
+    "yaml",
+    "java",
+    "dockerfile",
+    "regex",
+    "toml",
 
-  incremental_selection = {
-    enable = false,
-    keymaps = {
-      init_selection = "<leader>gnn",
-      node_incremental = "<leader>gnr",
-      scope_incremental = "<leader>gne",
-      node_decremental = "<leader>gnt",
+    "gitcommit",
+    "git_config",
+    "diff",
+
+    -- Markdown
+    "markdown",
+    "markdown_inline",
+
+    "http",
+    "xml",
+    "graphql",
+
+    -- Go Lang
+    "go",
+    "gomod",
+    "gowork",
+    "gosum",
+
+    -- Web Dev
+    "javascript",
+    "typescript",
+    "tsx",
+    "html",
+    "astro",
+    "css",
+  },
+  query_linter = {
+    enable = true,
+    use_virtual_text = true,
+    lint_events = { "BufWrite", "CursorHold" },
+  },
+  textobjects = {
+    swap = {
+      enable = true,
+      swap_next = {
+        ["sa"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["sA"] = "@parameter.inner",
+      },
     },
   },
-
+  rainbow = {
+    enable = true,
+    extended_mode = false,
+    max_file_lines = 1000,
+    query = {
+      "rainbow-parens",
+      html = "rainbow-tags",
+      javascript = "rainbow-tags-react",
+      tsx = "rainbow-tags",
+    },
+  },
+  tree_setter = {
+    enable = true,
+  },
   indent = {
     enable = true,
   },
-
-  textobjects = {
-    move = {
-      enable = false,
-      set_jumps = false, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]]"] = "@function.outer",
-        ["]m"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]["] = "@function.outer",
-        ["]M"] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[["] = "@function.outer",
-        ["[m"] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[]"] = "@function.outer",
-        ["[M"] = "@class.outer",
-      },
-    },
-    select = {
-      enable = false,
-
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = false,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    swap = {
-      enable = false,
-      swap_next = {
-        ["~"] = "@parameter.inner",
-      },
-    },
-  },
-
-  textsubjects = {
+  playground = {
     enable = true,
-    prev_selection = "<BS>",
-    keymaps = {
-      ["<CR>"] = "textsubjects-smart", -- works in visual mode
-    },
   },
+  indent = { enable = false }, --NOTE: This is an experimental feature(also create some lag on rapid keystorks).
 }
 
 M.mason = {

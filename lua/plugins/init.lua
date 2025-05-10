@@ -23,7 +23,6 @@ return {
     build = "make",
     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
@@ -139,18 +138,6 @@ return {
       "filNaj/tree-setter",
       "RRethy/nvim-treesitter-textsubjects",
       "danymat/neogen",
-      {
-        "folke/ts-comments.nvim",
-        opts = {
-          lang = {
-            tsx = {
-              jsx_element = "// %s",
-              jsx_fragment = "// %s",
-            },
-          },
-        },
-        event = "VeryLazy",
-      },
     },
     -- opts = overrides.treesitter,
     build = ":TSUpdate",
@@ -891,7 +878,6 @@ return {
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
       {
         "rcarriga/nvim-notify",
         opts = {
@@ -901,7 +887,6 @@ return {
           local banned_messages = {
             "No information available",
             "Content is not an image.",
-            "Failed to attach to typescript-tools for current buffer. Already attached to ts_ls",
           }
           vim.notify = function(msg, ...)
             for _, banned in ipairs(banned_messages) do
