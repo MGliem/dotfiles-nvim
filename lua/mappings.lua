@@ -53,6 +53,9 @@ map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "󰈚 Buffer previous" })
 
 ---close
 map("n", "<leader>x", "<cmd>bdelete<cr>", { desc = "󰈚 Buffer close" })
+
+---auto-save
+map("n", "<leader>ts", "<cmd>Autosave toggle<cr>", { desc = "󰈚 Auto save" })
 --------------------------------------------------- Editor ---------------------------------------------------
 
 map("n", "<leader>pu", function()

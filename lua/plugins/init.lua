@@ -486,11 +486,9 @@ return {
     },
   },
   {
-    "okuuva/auto-save.nvim",
-    event = { "InsertLeave", "TextChanged" },
-    config = function()
-      require "configs.autosave"
-    end,
+    "brianhuster/autosave.nvim",
+    event = "BufEnter",
+    opts = {},
   },
   {
     "RRethy/vim-illuminate",
