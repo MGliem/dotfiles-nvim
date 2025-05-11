@@ -254,9 +254,10 @@ map("n", "X", '"_X', silent)
 -- map("v", "x", '"_x', silent)
 map("v", "X", '"_X', silent)
 
--- don't yank on delete visual
+-- don't yank on delete
 map("v", "d", '"_d', silent)
-map("n", "dd", "<S-v>d", silent)
+map("n", "dd", '<S-v>"_d', silent)
+map("n", "d$", 'v$"_d', silent)
 
 -- Don't yank on visual paste
 -- map("v", "p", '"_dP', silent)
