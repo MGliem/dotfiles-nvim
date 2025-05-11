@@ -223,7 +223,18 @@ local servers = {
   "html",
   "jsonls",
   "lua_ls",
+  "marksman",
+  "tailwindcss",
+  "dockerls",
+  "yamlls",
 }
+
+for _, server in ipairs(servers) do
+  vim.lsp.config(server, {
+    on_attach = custom_on_attach,
+    capabilities = capabilities,
+  })
+end
 
 vim.lsp.config("eslint", {
   on_attach = custom_on_attach,
@@ -351,9 +362,13 @@ vim.lsp.config("lua_ls", {
   },
 })
 
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server, true)
+end
+
 require("mason-lspconfig").setup {
   ensure_installed = servers,
-  automatic_enable = true,
+  automatic_enable = false,
 }
 
 vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx, _)
