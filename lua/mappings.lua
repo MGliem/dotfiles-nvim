@@ -1,6 +1,7 @@
 require "nvchad.mappings"
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true, buffer = 0 }
+local silent = { silent = true }
 
 local function md_url_paste()
   -- Get clipboard
@@ -56,6 +57,20 @@ map("n", "<leader>x", "<cmd>bdelete<cr>", { desc = "󰈚 Buffer close" })
 
 ---auto-save
 map("n", "<leader>ts", "<cmd>Autosave toggle<cr>", { desc = "󰈚 Auto save" })
+
+--Terminal
+map({ "n", "t" }, "<leader>tf", function()
+  require("nvchad.term").toggle {
+    pos = "float",
+    id = "floatTerm",
+    float_opts = {
+      row = 0.05,
+      col = 0.05,
+      width = 0.9,
+      height = 0.8,
+    },
+  }
+end, { desc = "terminal toggle floating term" })
 --------------------------------------------------- Editor ---------------------------------------------------
 
 map("n", "<leader>pu", function()
@@ -204,25 +219,52 @@ map("n", "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Better Down", expr = true, 
 -- Better Up
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Better Up", expr = true, silent = true })
 
--- Hop
--- map("n", "<leader><leader>w", "<CMD> HopWord <CR>", { desc = "󰸱 Hint all words" })
--- map("n", "<leader><leader>t", "<CMD> HopNodes <CR>", { desc = " Hint Tree" })
--- map("n", "<leader><leader>o", "<CMD> HopLineStart<CR>", { desc = "󰕭 Hint Columns" })
--- map("n", "<leader><leader>l", "<CMD> HopWordCurrentLine<CR>", { desc = "󰗉 Hint Line" })
+-- Better window movement
+map("n", "<C-h>", "<C-w>h", silent)
+map("n", "<C-j>", "<C-w>j", silent)
+map("n", "<C-k>", "<C-w>k", silent)
+map("n", "<C-l>", "<C-w>l", silent)
 
---Terminal
-map({ "n", "t" }, "<leader>tf", function()
-  require("nvchad.term").toggle {
-    pos = "float",
-    id = "floatTerm",
-    float_opts = {
-      row = 0.05,
-      col = 0.05,
-      width = 0.9,
-      height = 0.8,
-    },
-  }
-end, { desc = "terminal toggle floating term" })
+-- H to move to the first non-blank character of the line
+map("n", "H", "^", silent)
+
+-- Move selected line / block of text in visual mode
+map("x", "K", ":move '<-2<CR>gv-gv", silent)
+map("x", "J", ":move '>+1<CR>gv-gv", silent)
+
+-- Keep visual mode indenting
+map("v", "<", "<gv", silent)
+map("v", ">", ">gv", silent)
+
+-- indent in normal mode with <Tab>
+map("n", "<Tab>", ">>", silent)
+map("n", "<S-Tab>", "<<", silent)
+
+-- Case change in visual mode
+-- map("v", "`", "u", silent)
+-- map("v", "<A-`>", "U", silent)
+
+-- Save file by CTRL-S
+-- map("n", "<C-s>", ":w<CR>", silent)
+-- map("i", "<C-s>", "<ESC> :w<CR>", silent)
+
+-- Don't yank on delete char
+map("n", "x", '"_x', silent)
+map("n", "X", '"_X', silent)
+-- map("v", "x", '"_x', silent)
+map("v", "X", '"_X', silent)
+
+-- don't yank on delete visual
+map("v", "d", '"_d', silent)
+map("n", "dd", "<S-v>d", silent)
+
+-- Don't yank on visual paste
+-- map("v", "p", '"_dP', silent)
+-- Don't yank on change
+map("v", "c", '"_c', silent)
+map("v", "C", '"_C', silent)
+map("n", "C", '"_C', silent)
+map("n", "c", '"_c', silent)
 
 -- Navigation
 -- map("n", "<C-ScrollWheelUp>", "<C-i>", { noremap = true, silent = true })
@@ -268,78 +310,28 @@ map({ "n", "v" }, "gl", "$", { desc = "[P]go to the end of the line" })
 -- In visual mode, after going to the end of the line, come back 1 character
 map("v", "gl", "$h", { desc = "[P]Go to the end of the line" })
 
--- add yours here
-local keymap = vim.keymap.set
-local silent = { silent = true }
-
 -- Volt menu
 -- Keyboard users
-keymap("n", "<C-t>", function()
+map("n", "<C-t>", function()
   require("menu").open "default"
 end, {})
 
 -- mouse users + nvimtree users!
-keymap("n", "<RightMouse>", function()
+map("n", "<RightMouse>", function()
   vim.cmd.exec '"normal! \\<RightMouse>"'
 
   require("menu").open("default", { mouse = true })
 end, {})
 
--- Better window movement
-keymap("n", "<C-h>", "<C-w>h", silent)
-keymap("n", "<C-j>", "<C-w>j", silent)
-keymap("n", "<C-k>", "<C-w>k", silent)
-keymap("n", "<C-l>", "<C-w>l", silent)
-
--- H to move to the first non-blank character of the line
-keymap("n", "H", "^", silent)
-
--- Move selected line / block of text in visual mode
-keymap("x", "K", ":move '<-2<CR>gv-gv", silent)
-keymap("x", "J", ":move '>+1<CR>gv-gv", silent)
-
--- Keep visual mode indenting
-keymap("v", "<", "<gv", silent)
-keymap("v", ">", ">gv", silent)
-
--- indent in normal mode with <Tab>
-keymap("n", "<Tab>", ">>", silent)
-keymap("n", "<S-Tab>", "<<", silent)
-
--- Case change in visual mode
--- keymap("v", "`", "u", silent)
--- keymap("v", "<A-`>", "U", silent)
-
--- Save file by CTRL-S
--- keymap("n", "<C-s>", ":w<CR>", silent)
--- keymap("i", "<C-s>", "<ESC> :w<CR>", silent)
-
--- Don't yank on delete char
-keymap("n", "x", '"_x', silent)
-keymap("n", "X", '"_X', silent)
--- keymap("v", "x", '"_x', silent)
-keymap("v", "X", '"_X', silent)
-
--- don't yank on delete visual
-keymap("v", "d", '"_d', silent)
-
--- Don't yank on visual paste
--- keymap("v", "p", '"_dP', silent)
--- Don't yank on change
-keymap("v", "c", '"_c', silent)
-keymap("v", "C", '"_C', silent)
-keymap("n", "C", '"_C', silent)
-keymap("n", "c", '"_c', silent)
-
-keymap({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-keymap({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-keymap({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-keymap({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-keymap("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
-keymap("n", "<c-n>", "<Plug>(YankyNextEntry)")
+map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+map("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
+map("n", "<c-n>", "<Plug>(YankyNextEntry)")
 
 -- Open links under cursor in browser with gx
-keymap("n", "gx", "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>", silent)
+map("n", "gx", "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>", silent)
 
 ------------------------------------------------- diagnostics ---------------------------------------------------
 
@@ -353,37 +345,24 @@ map("n", "<leader>tl", function()
   vim.diagnostic.config { virtual_lines = not vim.diagnostic.config().virtual_lines }
 end, { desc = "Toggle virtual text" })
 
-keymap(
+map(
   "n",
   "<leader>gen",
   "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>",
   silent
 )
-keymap(
+map(
   "n",
   "<leader>gep",
   "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>",
   silent
 )
-keymap("n", "<leader>gef", "<cmd>lua vim.diagnostic.open_float({ border = 'rounded', max_width = 100 })<CR>", silent)
+map("n", "<leader>gef", "<cmd>lua vim.diagnostic.open_float({ border = 'rounded', max_width = 100 })<CR>", silent)
 
--- vtsls
--- keymap("n", "<leader>ci", "<cmd>VtsExec add_missing_imports<CR>", silent)
--- keymap("n", "<leader>cr", "<cmd>VtsExec remove_unused_imports<CR>", silent)
--- keymap("n", "<leader>cu", "<cmd>VtsExec remove_unused<CR>", silent)
--- keymap("n", "<leader>cf", "<cmd>VtsExec fix_all<CR>", silent)
--- keymap("n", "<leader>cc", "<cmd>VtsExec rename_file<CR>", silent)
--- keymap("n", "<leader>co", "<cmd>VtsExec organize_imports<CR>", silent)
+map("n", "<leader>ci", "<cmd>TSToolsAddMissingImports<CR>", silent)
+map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<CR>", silent)
+map("n", "<leader>cf", "<cmd>TSToolsFixAll<CR>", silent)
 
-keymap("n", "<leader>ci", "<cmd>TSToolsAddMissingImports<CR>", silent)
-keymap("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<CR>", silent)
-keymap("n", "<leader>cf", "<cmd>TSToolsFixAll<CR>", silent)
-
---session
-keymap("n", "<leader>ss", "<cmd>SessionSave<CR>", silent)
-keymap("n", "<leader>rs", "<cmd>SessionRestore<CR>", silent)
-
---lsp
--- keymap("n", "<leader>lr", "<cmd>LspRestart vtsls<CR>", silent)
--- keymap("n", "<leader>ls", "<cmd>LspStart vtsls<CR>", silent)
-keymap("n", "<leader>cl", vim.lsp.codelens.run, { silent = true })
+---------------------------------------------------- Session ---------------------------------------------------
+map("n", "<leader>ss", "<cmd>SessionSave<CR>", silent)
+map("n", "<leader>rs", "<cmd>SessionRestore<CR>", silent)
