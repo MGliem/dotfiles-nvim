@@ -69,7 +69,7 @@ end
 
 require("typescript-tools").setup {
   on_attach = custom_on_attach,
-  handlers = handlers,
+  -- handlers = handlers,
 
   settings = {
     separate_diagnostic_server = true,
