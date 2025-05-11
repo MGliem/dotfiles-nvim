@@ -289,12 +289,12 @@ return {
           require "configs.luasnip"
         end,
       },
-      {
-        "windwp/nvim-autopairs",
-        config = function()
-          require "configs.autopair"
-        end,
-      },
+      -- {
+      --   "windwp/nvim-autopairs",
+      --   config = function()
+      --     require "configs.autopair"
+      --   end,
+      -- },
       -- {
       --   "zbirenbaum/copilot.lua",
       --   event = "InsertEnter",
