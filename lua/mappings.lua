@@ -277,6 +277,11 @@ end, { desc = "󰤑 Run neotest" })
 
 map("n", "<leader>tc", "<cmd>CoverageToggle<cr>", { desc = "Coverage in gutter" })
 map("n", "<leader><leader>c", "<cmd>CoverageLoad<cr><cmd>CoverageSummary<cr>", { desc = "Coverage summary" })
+
+--------------------------------------------------- Debugging ---------------------------------------------------
+
+map("n", "<leader>cl", "yiwoconsole.log('<Esc>pa: ', <Esc>pa);", { desc = "Console.log" })
+
 --------------------------------------------------- LSP ---------------------------------------------------
 map("n", "K", function()
   local api = vim.api
