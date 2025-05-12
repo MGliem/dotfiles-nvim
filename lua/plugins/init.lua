@@ -487,7 +487,7 @@ return {
   },
   {
     "brianhuster/autosave.nvim",
-    event = "BufEnter",
+    event = "InsertEnter",
     opts = {},
   },
   {

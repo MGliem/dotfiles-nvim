@@ -186,8 +186,8 @@ noice.setup {
       enabled = true,
       auto_open = {
         enabled = true,
-        trigger = true,
-        luasnip = true,
+        trigger = false,
+        luasnip = false,
         throttle = 50,
       },
       view = nil, -- when nil, use defaults from documentation
