@@ -189,8 +189,8 @@ M.cmp = {
   },
   completion = {
     completeopt = "menu,menuone,noinsert,noselect",
-    autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
-    keyword_length = 2,
+    -- autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
+    keyword_length = 1,
   },
   -- experimental = {
   --   ghost_text = {
@@ -260,19 +260,23 @@ M.cmp = {
     }),
   },
   -- explanations: https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt#L425
-  performance = {
-    debounce = 30,
-    throttle = 20,
-    async_budget = 0.8,
-    max_view_entries = 200,
-    fetching_timeout = 250,
-  },
+  -- performance = {
+  --   debounce = 30,
+  --   throttle = 20,
+  --   async_budget = 0.8,
+  --   max_view_entries = 200,
+  --   fetching_timeout = 250,
+  -- },
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
   },
   sources = {
+    {
+      name = "supermaven",
+      max_item_count = 2,
+    },
     {
       name = "nvim_lsp",
       keyword_length = 2,
@@ -290,10 +294,6 @@ M.cmp = {
     --   name = "codeium",
     --   max_item_count = 2,
     -- },
-    {
-      name = "supermaven",
-      max_item_count = 2,
-    },
     -- {
     --   name = "cmp_tabnine",
     --   max_item_count = 2,
@@ -313,18 +313,17 @@ M.cmp = {
   sorting = {
     priority_weight = 2,
     comparators = {
-      -- Prioriser les résultats de nvim_lsp
       deprioritize_snippet,
       require("cmp").config.compare.exact,
-      function(entry1, entry2)
-        local is_lsp1 = entry1.source.name == "nvim_lsp"
-        local is_lsp2 = entry2.source.name == "nvim_lsp"
-        if is_lsp1 and not is_lsp2 then
-          return true
-        elseif not is_lsp1 and is_lsp2 then
-          return false
-        end
-      end,
+      -- function(entry1, entry2)
+      --   local is_lsp1 = entry1.source.name == "nvim_lsp"
+      --   local is_lsp2 = entry2.source.name == "nvim_lsp"
+      --   if is_lsp1 and not is_lsp2 then
+      --     return true
+      --   elseif not is_lsp1 and is_lsp2 then
+      --     return false
+      --   end
+      -- end,
       require("cmp").config.compare.locality,
       require("cmp").config.compare.recently_used,
       under,

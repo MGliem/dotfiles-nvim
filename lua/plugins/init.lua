@@ -218,9 +218,12 @@ return {
       "js-everts/cmp-tailwind-colors",
       "rafamadriz/friendly-snippets",
       {
-        "supermaven-inc/supermaven-nvim",
+        "noisethanks/supermaven-nvim",
+        branch = "single_line_preview_options",
         config = function()
           require("supermaven-nvim").setup {
+            single_line_suggestion_newline = true,
+            show_diff_only = true,
             keymaps = {
               accept_suggestion = "<C-a>",
               clear_suggestion = "<C-c>",
