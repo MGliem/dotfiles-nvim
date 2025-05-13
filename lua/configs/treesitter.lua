@@ -1,81 +1,96 @@
 require("nvim-treesitter.configs").setup {
-  auto_install = true,
-  highlight = { enable = true, disable = { "dockerfile" } },
   ensure_installed = {
-    "vim",
-    "lua",
-    "luadoc",
-    "bash",
+    "tsx",
+    "typescript",
+    "javascript",
+    "html",
+    "css",
+    -- "java",
+    -- "vue",
+    -- "astro",
+    -- "svelte",
+    "gitcommit",
+    -- "graphql",
     "json",
     "json5",
-    "jq",
-    "yaml",
-    "java",
-    "dockerfile",
-    "regex",
-    "toml",
-
-    "gitcommit",
-    "git_config",
-    "diff",
-
-    -- Markdown
+    "lua",
     "markdown",
     "markdown_inline",
-
-    "http",
-    "xml",
-    "graphql",
-
-    -- Go Lang
-    "go",
-    "gomod",
-    "gowork",
-    "gosum",
-
-    -- Web Dev
-    "javascript",
-    "typescript",
-    "tsx",
-    "html",
-    "astro",
-    "css",
-  },
-  query_linter = {
+    -- "prisma",
+    "vim",
+  }, -- one of "all", or a list of languages
+  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = { "haskell" }, -- list of parsers to ignore installing
+  highlight = {
     enable = true,
-    use_virtual_text = true,
-    lint_events = { "BufWrite", "CursorHold" },
+    -- disable = { "markdown", "markdown_inline" }, -- Désactive le highlight pour le markdown
+    additional_vim_regex_highlighting = false, -- Évite les conflits avec d'autres highlighters
   },
-  textobjects = {
-    swap = {
-      enable = true,
-      swap_next = {
-        ["sa"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["sA"] = "@parameter.inner",
-      },
+  autotag = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = false,
+    keymaps = {
+      init_selection = "<leader>gnn",
+      node_incremental = "<leader>gnr",
+      scope_incremental = "<leader>gne",
+      node_decremental = "<leader>gnt",
     },
   },
-  rainbow = {
-    enable = true,
-    extended_mode = false,
-    max_file_lines = 1000,
-    query = {
-      "rainbow-parens",
-      html = "rainbow-tags",
-      javascript = "rainbow-tags-react",
-      tsx = "rainbow-tags",
-    },
-  },
-  tree_setter = {
-    enable = true,
-  },
+
   indent = {
     enable = true,
   },
-  playground = {
-    enable = true,
+
+  textobjects = {
+    move = {
+      enable = false,
+      set_jumps = false, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]]"] = "@function.outer",
+        ["]m"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]["] = "@function.outer",
+        ["]M"] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[["] = "@function.outer",
+        ["[m"] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[]"] = "@function.outer",
+        ["[M"] = "@class.outer",
+      },
+    },
+    select = {
+      enable = false,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = false,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    swap = {
+      enable = false,
+      swap_next = {
+        ["~"] = "@parameter.inner",
+      },
+    },
   },
-  indent = { enable = false }, --NOTE: This is an experimental feature(also create some lag on rapid keystorks).
+
+  textsubjects = {
+    enable = true,
+    prev_selection = "<BS>",
+    keymaps = {
+      ["<CR>"] = "textsubjects-smart", -- works in visual mode
+    },
+  },
 }
