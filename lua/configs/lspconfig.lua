@@ -231,7 +231,7 @@ local servers = {
 
 for _, server in ipairs(servers) do
   vim.lsp.config(server, {
-    on_attach = custom_on_attach,
+    on_attach = on_attach,
     capabilities = capabilities,
   })
 end

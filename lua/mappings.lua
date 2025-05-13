@@ -339,6 +339,16 @@ map("n", "<c-n>", "<Plug>(YankyNextEntry)")
 -- Open links under cursor in browser with gx
 map("n", "gx", "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>", silent)
 
+-- transform as import type
+map(
+  "n",
+  "<leader>ctw",
+  'viwxv"_dv"_doimport type { <Esc>pa }<Esc>k$vT}yj$p',
+  { desc = "Transform word under cursor as import type" }
+)
+
+map("n", "<leader>ctl", "^ea type<Esc>", { desc = "Import type same line" })
+
 ------------------------------------------------- diagnostics ---------------------------------------------------
 
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
