@@ -56,7 +56,7 @@ map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "󰈚 Buffer previous" })
 map("n", "<leader>x", "<cmd>bdelete<cr>", { desc = "󰈚 Buffer close" })
 
 ---auto-save
-map("n", "<leader>ts", "<cmd>Autosave toggle<cr>", { desc = "󰈚 Auto save" })
+map("n", "<leader>ts", "<cmd>ASToggle<cr>", { desc = "󰈚 Auto-save toggle" })
 
 --Terminal
 map({ "n", "t" }, "<leader>tf", function()
