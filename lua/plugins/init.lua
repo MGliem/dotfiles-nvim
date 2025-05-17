@@ -576,15 +576,78 @@ return {
     },
   },
   {
-    "smoka7/multicursors.nvim",
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    opts = {
-      -- updatetime = 10,
-      -- hint_config = false,
-    },
-    dependencies = {
-      "nvimtools/hydra.nvim",
-    },
+    "mg979/vim-visual-multi",
+    event = "VeryLazy",
+    init = function()
+      vim.cmd [[
+      let g:VM_mouse_mappings = 1
+      let g:VM_default_mappings = 0
+      let g:VM_leader = ','
+      let g:VM_maps = {}
+      let g:VM_maps['Find Under']         = '<C-n>'
+      let g:VM_maps['Find Subword Under'] = '<C-n>'
+      let g:VM_maps["Select Cursor Up"]   = '<M-C-Up>'
+      let g:VM_maps["Select Cursor Down"] = '<M-C-Down>'
+      let g:VM_maps["Undo"] = 'u'
+      let g:VM_maps["Redo"] = '<C-r>'
+      let g:VM_maps["Add Cursor Down"]             = '<C-M-j>'
+      let g:VM_maps["Add Cursor Up"]               = '<C-M-k>'
+      let g:VM_maps["Add Cursor At Pos"]           = '<C-c>'
+      let g:VM_maps["Surround"]                    = 'S'
+      let g:VM_maps["Mouse Cursor"]                = '<C-LeftMouse>'
+      let g:VM_maps["Mouse Word"]                  = '<C-RightMouse>'
+      let g:VM_maps["Mouse Column"]                = '<M-C-RightMouse>'
+      let g:VM_maps["Switch Mode"]                 = ''
+
+      let g:VM_maps["Find Next"]                   = ''
+      let g:VM_maps["Find Prev"]                   = ''
+      let g:VM_maps["Goto Next"]                   = ''
+      let g:VM_maps["Goto Prev"]                   = ''
+      let g:VM_maps["Seek Next"]                   = ''
+      let g:VM_maps["Seek Prev"]                   = ''
+      let g:VM_maps["Skip Region"]                 = ''
+      let g:VM_maps["Remove Region"]               = 'q'
+      let g:VM_maps["Invert Direction"]            = ''
+      let g:VM_maps["Find Operator"]               = ""
+      let g:VM_maps["Surround"]                    = ''
+      let g:VM_maps["Replace Pattern"]             = ''
+
+      let g:VM_maps["Tools Menu"]                  = ''
+      let g:VM_maps["Show Registers"]              = ''
+      let g:VM_maps["Case Setting"]                = ''
+      let g:VM_maps["Toggle Whole Word"]           = ''
+      let g:VM_maps["Transpose"]                   = ''
+      let g:VM_maps["Align"]                       = ''
+      let g:VM_maps["Duplicate"]                   = ''
+      let g:VM_maps["Rewrite Last Search"]         = ''
+      let g:VM_maps["Merge Regions"]               = ''
+      let g:VM_maps["Split Regions"]               = ''
+      let g:VM_maps["Remove Last Region"]          = 'Q'
+      let g:VM_maps["Visual Subtract"]             = ''
+      let g:VM_maps["Case Conversion Menu"]        = ''
+      let g:VM_maps["Search Menu"]                 = ''
+
+      let g:VM_maps["Run Normal"]                  = ''
+      let g:VM_maps["Run Last Normal"]             = ''
+      let g:VM_maps["Run Visual"]                  = ''
+      let g:VM_maps["Run Last Visual"]             = ''
+      let g:VM_maps["Run Ex"]                      = ''
+      let g:VM_maps["Run Last Ex"]                 = ''
+      let g:VM_maps["Run Macro"]                   = ''
+      let g:VM_maps["Align Char"]                  = ''
+      let g:VM_maps["Align Regex"]                 = ''
+      let g:VM_maps["Numbers"]                     = ''
+      let g:VM_maps["Numbers Append"]              = ''
+      let g:VM_maps["Zero Numbers"]                = ''
+      let g:VM_maps["Zero Numbers Append"]         = ''
+      let g:VM_maps["Shrink"]                      = ""
+      let g:VM_maps["Enlarge"]                     = ""
+
+      let g:VM_maps["Toggle Block"]                = ''
+      let g:VM_maps["Toggle Single Region"]        = ''
+      let g:VM_maps["Toggle Multiline"]            = ''
+    ]]
+    end,
   },
   {
     "rmagatti/auto-session",
@@ -894,7 +957,7 @@ return {
           }
           vim.notify = function(msg, ...)
             for _, banned in ipairs(banned_messages) do
-              if msg == banned then
+              if msg:find(banned, 1, true) then
                 return
               end
             end
@@ -903,6 +966,7 @@ return {
         end,
       },
     },
+
     config = function()
       require "configs.noice"
       ---@diagnostic disable-next-line: different-requires

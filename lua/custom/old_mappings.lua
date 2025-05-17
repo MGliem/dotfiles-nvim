@@ -310,7 +310,7 @@ M.general = {
       "Resume telescope",
       opts = { nowait = true },
     },
-    ["<C-c>"] = { "<CMD> Telescope commander<CR>", "󰘳 Find files" },
+    -- ["<C-c>"] = { "<CMD> Telescope commander<CR>", "󰘳 Find files" },
 
     -- Keep cursor in the center line when C-D / C-U
     -- ["<C-d>"] = { "<C-d>zz", " Scroll down", opts = { silent = true } },
