@@ -413,9 +413,6 @@ return {
               before = true,
               after = false,
             },
-            search = {
-              mode = "fuzzy",
-            },
           }
         end,
         desc = "Flash",
@@ -453,9 +450,6 @@ return {
               before = true,
               after = false,
             },
-            search = {
-              mode = "fuzzy",
-            },
           }
         end,
         desc = "Treesitter Search",
@@ -478,9 +472,6 @@ return {
             label = {
               before = true,
               after = false,
-            },
-            search = {
-              mode = "fuzzy",
             },
           }
         end,
