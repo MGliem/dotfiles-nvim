@@ -1096,10 +1096,7 @@ return {
         next = "]c",
         prev = "[c",
       },
-      disable_diagnostics = true,
-      list_opener = function()
-        require("trouble").open "quickfix"
-      end,
+      config = true,
     },
   },
   -- {

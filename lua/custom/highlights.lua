@@ -246,8 +246,8 @@ M.add = {
   RainbowDelimiterCyan = { fg = "cyan" },
 
   -- Diff
-  DiffChange = { fg = "yellow" },
-  DiffAdd = { fg = "vibrant_green" },
+  DiffChange = { fg = "yellow", bg = "cyan" },
+  DiffAdd = { fg = "vibrant_green", bg = "pink" },
   DiffText = { fg = "white", bg = "red", bold = true },
 
   DiffviewDim1 = { fg = "grey" },
