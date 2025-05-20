@@ -1380,6 +1380,28 @@ return {
   },
   ----------------------------------------- language plugins ------------------------------------------
   {
+    "davidmh/cspell.nvim",
+    lazy = true, -- Chargé uniquement quand nécessaire
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    event = "VeryLazy",
+    depends = { "davidmh/cspell.nvim" },
+    opts = function(_, opts)
+      local cspell = require "cspell"
+      opts.sources = opts.sources or {}
+      table.insert(
+        opts.sources,
+        cspell.diagnostics.with {
+          diagnostics_postprocess = function(diagnostic)
+            diagnostic.severity = vim.diagnostic.severity.HINT
+          end,
+        }
+      )
+      table.insert(opts.sources, cspell.code_actions)
+    end,
+  },
+  {
     "pmizio/typescript-tools.nvim",
     -- dependencies = { "dmmulroy/ts-error-translator.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 

@@ -18,6 +18,10 @@ opt.laststatus = 3 -- global statusline
 opt.showmode = false
 opt.smoothscroll = true
 
+--spell
+opt.spelllang = "en"
+-- opt.spelloptions = "camel"
+
 o.mousemoveevent = true
 
 -- opt.clipboard = "unnamedplus"
