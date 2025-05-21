@@ -19,7 +19,7 @@ opt.showmode = false
 opt.smoothscroll = true
 
 --spell
-opt.spelllang = "en"
+-- opt.spelllang = "en"
 -- opt.spelloptions = "camel"
 
 o.mousemoveevent = true

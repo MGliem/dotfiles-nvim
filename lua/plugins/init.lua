@@ -1390,7 +1390,7 @@ return {
     opts = function(_, opts)
       local config = {
         cspell_config_dirs = {
-          vim.fn.stdpath "config",
+          vim.fn.stdpath "config" .. "/cspell",
         },
       }
       local cspell = require "cspell"
@@ -1404,13 +1404,12 @@ return {
           end,
         }
       )
-      table.insert(opts.sources, cspell.code_actions.with({ config = config }))
+      table.insert(opts.sources, cspell.code_actions.with { config = config })
     end,
   },
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    -- dependencies = { "dmmulroy/ts-error-translator.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     ft = {
       "javascript",
       "typescript",
@@ -1428,33 +1427,21 @@ return {
   -- },
   {
     "dmmulroy/ts-error-translator.nvim",
-    -- dependencies = { "dmmulroy/ts-error-translator.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-
     ft = {
       "javascript",
       "typescript",
       "javascriptreact",
       "typescriptreact",
     },
-    -- config = function()
-    --   require "configs.ts"
-    -- end,
-  },
-  -- { "yioneko/nvim-vtsls" },
-  {
-    "nvim-java/nvim-java",
-    config = function()
-      require("java").setup()
-      require("lspconfig").jdtls.setup {}
-    end,
   },
   -- {
-  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   event = "LspAttach",
+  --   "nvim-java/nvim-java",
   --   config = function()
-  --     require("lsp_lines").setup()
+  --     require("java").setup()
+  --     require("lspconfig").jdtls.setup {}
   --   end,
   -- },
+  -- {
   {
     "BrunoKrugel/package-info.nvim",
     event = "BufEnter package.json",
