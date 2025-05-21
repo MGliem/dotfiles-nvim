@@ -1381,24 +1381,30 @@ return {
   ----------------------------------------- language plugins ------------------------------------------
   {
     "davidmh/cspell.nvim",
-    lazy = true, -- Chargé uniquement quand nécessaire
+    enabled = not vim.g.vscode,
+    dependencies = { "Joakker/lua-json5" },
   },
   {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
-    depends = { "davidmh/cspell.nvim" },
     opts = function(_, opts)
+      local config = {
+        cspell_config_dirs = {
+          vim.fn.stdpath "config",
+        },
+      }
       local cspell = require "cspell"
       opts.sources = opts.sources or {}
       table.insert(
         opts.sources,
         cspell.diagnostics.with {
+          config = config,
           diagnostics_postprocess = function(diagnostic)
             diagnostic.severity = vim.diagnostic.severity.HINT
           end,
         }
       )
-      table.insert(opts.sources, cspell.code_actions)
+      table.insert(opts.sources, cspell.code_actions.with({ config = config }))
     end,
   },
   {

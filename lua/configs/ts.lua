@@ -68,12 +68,12 @@ local custom_on_attach = function(client, bufnr)
 end
 
 require("typescript-tools").setup {
-  on_attach = custom_on_attach,
+  -- on_attach = custom_on_attach,
   -- handlers = handlers,
 
   settings = {
     separate_diagnostic_server = true,
-    expose_as_code_action = { "all" },
+    -- expose_as_code_action = { "all" },
     tsserver_file_preferences = {
       includeCompletionsForModuleExports = true,
       quotePreference = "auto",
