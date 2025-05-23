@@ -1,10 +1,1 @@
-{
-  "import": [
-    "~/.config/nvim/cspell/node_modules/@cspell/dict-fr-fr/cspell-ext.json"
-  ],
-  "version": "0.2",
-  "dictionaries": ["fr-fr"],
-  "flagWords": [],
-  "language": "en",
-  "words": ["lspconfig"]
-}
+{"flagWords":[],"language":"en","version":"0.2","dictionaries":["fr-fr"],"words":["lspconfig","Pressable","Monext","notifee","Corpo","Dind","LORAWAN"],"import":["~/.config/nvim/cspell/node_modules/@cspell/dict-fr-fr/cspell-ext.json"]}
