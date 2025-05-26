@@ -278,17 +278,17 @@ autocmd("BufReadPost", {
   end,
 })
 
-autocmd("User", {
-  desc = "Git conflict popup",
-  pattern = "GitConflictDetected",
-  callback = function()
-    vim.notify("Conflict detected in " .. vim.fn.expand "<afile>")
-    vim.keymap.set("n", "cww", function()
-      engage.conflict_buster()
-      create_buffer_local_mappings()
-    end)
-  end,
-})
+-- autocmd("User", {
+--   desc = "Git conflict popup",
+--   pattern = "GitConflictDetected",
+--   callback = function()
+--     vim.notify("Conflict detected in " .. vim.fn.expand "<afile>")
+--     vim.keymap.set("n", "cww", function()
+--       engage.conflict_buster()
+--       create_buffer_local_mappings()
+--     end)
+--   end,
+-- })
 
 -- autocmd("BufWritePost", {
 --   desc = "Reload NvimTree after writing the buffer",
@@ -303,19 +303,19 @@ autocmd("User", {
 --   end,
 -- })
 
-autocmd({ "BufRead" }, {
-  desc = "Load git-conflict.nvim only when a git file is opened",
-  group = vim.api.nvim_create_augroup("GitConflictLazyLoad", { clear = true }),
-  callback = function()
-    vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
-    if vim.v.shell_error == 0 then
-      vim.api.nvim_del_augroup_by_name "GitConflictLazyLoad"
-      vim.schedule(function()
-        require("lazy").load { plugins = { "git-conflict.nvim" } }
-      end)
-    end
-  end,
-})
+-- autocmd({ "BufRead" }, {
+--   desc = "Load git-conflict.nvim only when a git file is opened",
+--   group = vim.api.nvim_create_augroup("GitConflictLazyLoad", { clear = true }),
+--   callback = function()
+--     vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
+--     if vim.v.shell_error == 0 then
+--       vim.api.nvim_del_augroup_by_name "GitConflictLazyLoad"
+--       vim.schedule(function()
+--         require("lazy").load { plugins = { "git-conflict.nvim" } }
+--       end)
+--     end
+--   end,
+-- })
 
 autocmd("TextYankPost", {
   desc = "Highlight on yank",

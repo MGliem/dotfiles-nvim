@@ -416,22 +416,30 @@ M.debug = {
 
 M.git = {
   n = {
-    ["<leader>gc"] = { "<CMD>Telescope git_commits<CR>", "  Git commits" },
+    -- ["<leader>gc"] = { "<CMD>Telescope git_commits<CR>", "  Git commits" },
     ["<leader>gb"] = { "<CMD>Telescope git_branches<CR>", "  Git branches" },
     ["<leader>gs"] = { "<CMD>Telescope git_status<CR>", "  Git status" },
     ["<leader>lg"] = { "<CMD>LazyGit<CR>", "  LazyGit" },
     ["<leader>gl"] = { "<CMD>GitBlameToggle<CR>", "  Blame line" },
     ["<leader>gtb"] = { "<CMD>ToggleBlame<CR>", "  Blame line" },
+
     ["<leader>gvd"] = { "<CMD> DiffviewOpen<CR>", "  Show git diff" },
     ["<leader>gvf"] = { "<CMD> DiffviewFileHistory %<CR>", "  Show file history" },
     ["<leader>gvp"] = { "<CMD> DiffviewOpen --cached<CR>", "  Show staged diffs" },
     ["<leader>gvr"] = { "<CMD> DiffviewRefresh<CR>", "  Refresh diff view" },
     ["<leader>gvc"] = { "<CMD> DiffviewClose<CR>", "  Close diff view" },
-    ["<Leader>gcb"] = { "<CMD>GitConflictChooseBoth<CR>", "Choose both" },
-    ["<Leader>gcn"] = { "<CMD>GitConflictNextConflict<CR>", "Move to next conflict" },
-    ["<Leader>gco"] = { "<CMD>GitConflictChooseOurs<CR>", "Choose ours" },
-    ["<Leader>gcp"] = { "<CMD>GitConflictPrevConflict<CR>", "Move to prev conflict" },
-    ["<Leader>gct"] = { "<CMD>GitConflictChooseTheirs<CR>", "Choose theirs" },
+
+    -- ["<Leader>gcb"] = { "<CMD>GitConflictChooseBoth<CR>", "Choose both" },
+    -- ["<Leader>gcn"] = { "<CMD>GitConflictNextConflict<CR>", "Move to next conflict" },
+    -- ["<Leader>gco"] = { "<CMD>GitConflictChooseOurs<CR>", "Choose ours" },
+    -- ["<Leader>gcp"] = { "<CMD>GitConflictPrevConflict<CR>", "Move to prev conflict" },
+    -- ["<Leader>gct"] = { "<CMD>GitConflictChooseTheirs<CR>", "Choose theirs" },
+
+    ["<Leader>gcb"] = { "<CMD>ConflictMarkerBoth<CR>", "Choose both" },
+    ["<Leader>gcn"] = { "<CMD>ConflictMarkerNextHunk<CR>", "Move to next conflict" },
+    ["<Leader>gco"] = { "<CMD>ConflictMarkerOurselves<CR>", "Choose ours" },
+    ["<Leader>gcp"] = { "<CMD>ConflictMarkerNextHunk<CR>", "Move to prev conflict" },
+    ["<Leader>gct"] = { "<CMD>ConflictMarkerThemselves<CR>", "Choose theirs" },
   },
 }
 
