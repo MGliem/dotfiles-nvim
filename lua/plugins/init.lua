@@ -56,6 +56,10 @@ return {
     },
   },
   {
+    "mason-org/mason.nvim",
+    opts = overrides.mason,
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
       -- "artemave/workspace-diagnostics.nvim",
@@ -1388,25 +1392,42 @@ return {
   },
   {
     "nvimtools/none-ls.nvim",
-    event = "VeryLazy",
-    opts = function(_, opts)
+    event = { "BufReadPre", "BufNewFile" },
+    opts = function()
+      local cspell = require "cspell"
+      local ok, none_ls = pcall(require, "null-ls")
+      if not ok then
+        return
+      end
       local config = {
         cspell_config_dirs = {
           vim.fn.stdpath "config" .. "/cspell",
         },
       }
-      local cspell = require "cspell"
-      opts.sources = opts.sources or {}
-      table.insert(
-        opts.sources,
+
+      local b = none_ls.builtins
+
+      local sources = {
+        -- spell check
+        b.diagnostics.codespell,
+        -- cspell
         cspell.diagnostics.with {
+          -- Set the severity to HINT for unknown words
           config = config,
+
           diagnostics_postprocess = function(diagnostic)
-            diagnostic.severity = vim.diagnostic.severity.HINT
+            diagnostic.severity = vim.diagnostic.severity["HINT"]
           end,
-        }
-      )
-      table.insert(opts.sources, cspell.code_actions.with { config = config })
+        },
+        cspell.code_actions.with { config = config },
+      }
+      -- Define the debounce value
+      local debounce_value = 400
+      return {
+        sources = sources,
+        debounce = debounce_value,
+        debug = true,
+      }
     end,
   },
   {

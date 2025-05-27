@@ -212,6 +212,10 @@ M.mason = {
     "emmet-ls",
 
     -- Spell
+    "cspell",
+    "codespell",
+
+    --MD
     "marksman",
 
     -- Json

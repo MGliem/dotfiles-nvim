@@ -33,9 +33,9 @@ conform.setup {
     query = { "format-queries" },
     lua = { "stylua" },
     http = { "kulala" },
-    go = function(bufnr)
-      return { first(bufnr, "goimports", "gofumpt") }
-    end,
+    -- go = function(bufnr)
+    --   return { first(bufnr, "goimports", "gofumpt") }
+    -- end,
     ["vue"] = { "prettier" },
     ["scss"] = { "prettier" },
     ["less"] = { "prettier" },
