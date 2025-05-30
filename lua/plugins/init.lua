@@ -1408,8 +1408,6 @@ return {
       local b = none_ls.builtins
 
       local sources = {
-        -- spell check
-        b.diagnostics.codespell,
         -- cspell
         cspell.diagnostics.with {
           -- Set the severity to HINT for unknown words
@@ -1422,7 +1420,7 @@ return {
         cspell.code_actions.with { config = config },
       }
       -- Define the debounce value
-      local debounce_value = 400
+      local debounce_value = 100
       return {
         sources = sources,
         debounce = debounce_value,

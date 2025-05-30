@@ -185,7 +185,7 @@ noice.setup {
     signature = {
       enabled = true,
       auto_open = {
-        enabled = true,
+        enabled = false,
         trigger = false,
         luasnip = false,
         throttle = 50,
