@@ -45,14 +45,14 @@ return {
           },
         },
       },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
+      --   {
+      --     -- Make sure to set this up properly if you have lazy=true
+      --     "MeanderingProgrammer/render-markdown.nvim",
+      --     opts = {
+      --       file_types = { "markdown", "Avante" },
+      --     },
+      --     ft = { "markdown", "Avante" },
+      --   },
     },
   },
   {
@@ -86,10 +86,6 @@ return {
       },
     },
     config = function() end,
-  },
-  {
-    "lambdalisue/suda.vim",
-    lazy = false,
   },
   {
     "folke/which-key.nvim",
@@ -154,11 +150,11 @@ return {
       require "configs.treesitter"
     end,
   },
-  {
-    "doxnit/cmp-luasnip-choice",
-    event = "InsertEnter",
-    opts = { auto_open = true },
-  },
+  -- {
+  --   "doxnit/cmp-luasnip-choice",
+  --   event = "InsertEnter",
+  --   opts = { auto_open = true },
+  -- },
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = { "antosha417/nvim-lsp-file-operations" },
@@ -178,10 +174,6 @@ return {
     end,
   },
   { "mbbill/undotree", lazy = false, cmd = "UndotreeToggle" },
-  -- {
-  --   "NvChad/nvim-colorizer.lua",
-  --   enabled = false,
-  -- },
   {
     "brenoprata10/nvim-highlight-colors",
     event = { "CursorHold", "CursorMoved" },
@@ -190,24 +182,6 @@ return {
       virtual_symbol = "",
     },
   },
-  -- {
-  --   "NStefan002/visual-surround.nvim",
-  --   event = "BufEnter",
-  --   config = function()
-  --     require("visual-surround").setup {
-  --       use_default_keymaps = false,
-  --       exit_visual_mode = false,
-  --     }
-  --     local surround_chars = { "{", "[", "(", "'", '"', "<", "`" }
-  --     local surround = require("visual-surround").surround
-  --
-  --     for _, key in pairs(surround_chars) do
-  --       vim.keymap.set("v", "s" .. key, function()
-  --         surround(key)
-  --       end, { desc = "[visual-surround] Surround selection with " .. key })
-  --     end
-  --   end,
-  -- },
   {
     "hrsh7th/nvim-cmp",
     opts = cmp_opt.cmp,
@@ -215,8 +189,8 @@ return {
       "delphinus/cmp-ctags",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       -- "hrsh7th/cmp-copilot",
-      "ray-x/cmp-treesitter",
-      "tzachar/cmp-fuzzy-buffer",
+      -- "ray-x/cmp-treesitter",
+      -- "tzachar/cmp-fuzzy-buffer",
       "roobert/tailwindcss-colorizer-cmp.nvim",
       "tzachar/fuzzy.nvim",
       "js-everts/cmp-tailwind-colors",
@@ -240,52 +214,6 @@ return {
           require("supermaven-nvim.completion_preview").suggestion_group = "SupermavenSuggestion"
         end,
       },
-      -- {
-      --   "Exafunction/codeium.nvim",
-      --   config = function()
-      --     require("codeium").setup {
-      --       enable_chat = true,
-      --       virtual_text = {
-      --         enabled = false,
-      --
-      -- -- These are the defaults
-      --
-      -- -- Set to true if you never want completions to be shown automatically.
-      -- manual = false,
-      -- -- A mapping of filetype to true or false, to enable virtual text.
-      -- filetypes = {},
-      -- -- Whether to enable virtual text of not for filetypes not specifically listed above.
-      -- default_filetype_enabled = true,
-      -- -- How long to wait (in ms) before requesting completions after typing stops.
-      -- idle_delay = 75,
-      -- -- Priority of the virtual text. This usually ensures that the completions appear on top of
-      -- -- other plugins that also add virtual text, such as LSP inlay hints, but can be modified if
-      -- -- desired.
-      -- virtual_text_priority = 65535,
-      -- -- Set to false to disable all key bindings for managing completions.
-      -- map_keys = true,
-      -- -- The key to press when hitting the accept keybinding but no completion is showing.
-      -- -- Defaults to \t normally or <c-n> when a popup is showing.
-      -- accept_fallback = nil,
-      -- -- Key bindings for managing completions in virtual text mode.
-      -- key_bindings = {
-      --   -- Accept the current completion.
-      --   accept = "<Tab>",
-      --   -- Accept the next word.
-      --   accept_word = false,
-      --   -- Accept the next line.
-      --   accept_line = false,
-      --   -- Clear the virtual text.
-      --   clear = "<C-c>",
-      --   -- Cycle to the next completion.
-      --   next = "<C-x>",
-      --   -- Cycle to the previous completion.
-      --   prev = "<C-w>",
-      -- }
-      -- }, -- add any options here
-      -- }
-      --   end,
-      -- },
       {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
@@ -296,12 +224,12 @@ return {
           require "configs.luasnip"
         end,
       },
-      -- {
-      --   "windwp/nvim-autopairs",
-      --   config = function()
-      --     require "configs.autopair"
-      --   end,
-      -- },
+      {
+        "windwp/nvim-autopairs",
+        config = function()
+          require "configs.autopair"
+        end,
+      },
       -- {
       --   "zbirenbaum/copilot.lua",
       --   event = "InsertEnter",
@@ -382,13 +310,6 @@ return {
     end,
   },
   ----------------------------------------- enhance plugins ------------------------------------------
-  -- {
-  --   "j-morano/buffer_manager.nvim",
-  --   lazy = false,
-  --   config = function()
-  --     require "configs.buffer-manager"
-  --   end,
-  -- },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -656,13 +577,6 @@ return {
       }
     end,
   },
-  -- {
-  --   "tadmccorkle/markdown.nvim",
-  --   ft = "markdown", -- or 'event = "VeryLazy"'
-  --   opts = {
-  --     -- configuration here or empty for defaults
-  --   },
-  -- },
   {
     "obsidian-nvim/obsidian.nvim",
     lazy = true,
@@ -708,14 +622,6 @@ return {
       }
     end,
   },
-  -- {
-  --   "chrisgrieser/nvim-early-retirement",
-  --   event = "VeryLazy",
-  --   opts = {
-  --     retirementAgeMins = 5,
-  --     notificationOnAutoClose = false,
-  --   },
-  -- },
   -- {
   --   "jonahgoldwastaken/copilot-status.nvim",
   --   event = "LspAttach",
@@ -814,7 +720,7 @@ return {
   -- },
   {
     "mawkler/modicator.nvim",
-    event = "ModeChanged",
+    event = "VeryLazy",
     init = function()
       -- These are required for Modicator to work
       vim.o.cursorline = true
@@ -828,29 +734,28 @@ return {
       },
     },
   },
-  -- {
-  --   'mvllow/modes.nvim',
-  --   tag = 'v0.2.0',
-  --   event = "ModeChanged",
-  --   config = function()
-  --     require('modes').setup({
-  --       colors = {
-  --         bg = "",   -- Optional bg param, defaults to Normal hl group
-  --         copy = "#f5c359",
-  --         delete = "#c75c6a",
-  --         insert = "#78ccc5",
-  --         visual = "#9745be",
-  --       },
-  --
-  --       -- Set opacity for cursorline and number background
-  --       line_opacity = 0.15,
-  --
-  --       -- Disable modes highlights in specified filetypes
-  --       -- Please PR commonly ignored filetypes
-  --       ignore_filetypes = { 'NvimTree', 'TelescopePrompt' }
-  --     })
-  --   end
-  -- },
+  {
+    "mvllow/modes.nvim",
+    tag = "v0.2.0",
+    event = "VeryLazy",
+    config = function()
+      require("modes").setup {
+        colors = {
+          bg = "", -- Optional bg param, defaults to Normal hl group
+          copy = "#f5c359",
+          delete = "#c75c6a",
+          insert = "#78ccc5",
+          visual = "#9745be",
+        },
+        -- Set opacity for cursorline and number background
+        line_opacity = 0.15,
+
+        -- Disable modes highlights in specified filetypes
+        -- Please PR commonly ignored filetypes
+        ignore_filetypes = { "NvimTree", "TelescopePrompt" },
+      }
+    end,
+  },
   {
     "MagicDuck/grug-far.nvim",
     event = "VeryLazy",

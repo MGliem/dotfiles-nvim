@@ -571,10 +571,10 @@ autocmd("FileChangedShellPost", {
 })
 
 -- Hide cursorline in insert mode
-autocmd({ "InsertLeave", "WinEnter" }, {
-  command = "set cursorline",
-})
-
-autocmd({ "InsertEnter", "WinLeave" }, {
-  command = "set nocursorline",
-})
+-- autocmd({ "InsertLeave", "WinEnter" }, {
+--   command = "set cursorline",
+-- })
+--
+-- autocmd({ "InsertEnter", "WinLeave" }, {
+--   command = "set nocursorline",
+-- })
