@@ -362,12 +362,6 @@ M.node = {
       end,
       "󰎙 Install package",
     },
-    ["<leader>jc"] = {
-      function()
-        require("nvim-js-actions").js_arrow_fn.toggle()
-      end,
-      "󰎙 Toggle arrow",
-    },
   },
 }
 

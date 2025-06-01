@@ -3,22 +3,22 @@ if not present then
   return
 end
 
-local group = vim.api.nvim_create_augroup('autosave', {})
+local group = vim.api.nvim_create_augroup("autosave", {})
 
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'AutoSaveEnable',
-    group = group,
-    callback = function(opts)
-        vim.notify('AutoSave enabled', vim.log.levels.INFO)
-    end,
+vim.api.nvim_create_autocmd("User", {
+  pattern = "AutoSaveEnable",
+  group = group,
+  callback = function(opts)
+    vim.notify("AutoSave enabled", vim.log.levels.INFO)
+  end,
 })
 
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'AutoSaveDisable',
-    group = group,
-    callback = function(opts)
-        vim.notify('AutoSave disabled', vim.log.levels.INFO)
-    end,
+vim.api.nvim_create_autocmd("User", {
+  pattern = "AutoSaveDisable",
+  group = group,
+  callback = function(opts)
+    vim.notify("AutoSave disabled", vim.log.levels.INFO)
+  end,
 })
 
 autoSave.setup {
@@ -33,6 +33,7 @@ autoSave.setup {
   -- },
   events = { "InsertLeave", "TextChanged" },
   silent = true,
+  enabled  = false,
   callbacks = {
     before_saving = function()
       -- save global autoformat status
