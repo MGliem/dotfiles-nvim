@@ -134,6 +134,19 @@ map("n", "<leader>ut", function()
   enter_undotree()
 end, { desc = " Undotree" })
 
+--luasnip
+local ls = require "luasnip"
+
+map({ "i" }, "<C-K>", function()
+  ls.expand()
+end, { silent = true })
+map({ "i", "s" }, "<C-L>", function()
+  ls.jump(1)
+end, { silent = true })
+map({ "i", "s" }, "<C-J>", function()
+  ls.jump(-1)
+end, { silent = true })
+
 --------------------------------------------------- Text ---------------------------------------------------
 map("n", "<S-CR>", "o<ESC>", { desc = " New line" })
 map("s", "<BS>", "<C-o>c", { desc = "Better backspace in select mode" })

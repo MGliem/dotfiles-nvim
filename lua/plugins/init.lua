@@ -122,7 +122,6 @@ return {
     dependencies = {
       "debugloop/telescope-undo.nvim",
       "gnfisher/nvim-telescope-ctags-plus",
-      "benfowler/telescope-luasnip.nvim",
       "FabianWirth/search.nvim",
       "Marskey/telescope-sg",
       {
@@ -130,6 +129,13 @@ return {
         build = "make",
       },
     },
+  },
+  {
+    "benfowler/telescope-luasnip.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    init = function()
+      require("telescope").load_extension "luasnip"
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -426,17 +432,17 @@ return {
       }
     end,
   },
-  -- {
-  --   "andrewferrier/debugprint.nvim",
-  --   lazy = false,
-  --   opts = {
-  --     keymaps = {
-  --       visual = {
-  --         variable_below = "<leader><leader>p",
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "andrewferrier/debugprint.nvim",
+    lazy = false,
+    opts = {
+      keymaps = {
+        visual = {
+          variable_below = "<leader><leader>p",
+        },
+      },
+    },
+  },
   {
     "aznhe21/actions-preview.nvim",
     event = "LspAttach",
@@ -651,30 +657,21 @@ return {
       extras = { named_parameters = true },
     },
   },
-  -- {
-  --   "tzachar/local-highlight.nvim",
-  --   event = { "CursorHold", "CursorHoldI" },
-  --   opts = {
-  --     hlgroup = "Visual",
-  --   },
-  -- },
-  -- {
-  --   "mistweaverco/kulala.nvim",
-  --   ft = { "http" },
-  --   opts = {
-  --     inlay = {
-  --       loading_icon = "",
-  --       done_icon = "",
-  --     },
-  --   },
-  -- },
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   main = "ibl",
-  --   opts = {
-  --     scope = { enabled = false },
-  --   },
-  -- },
+  {
+    "tzachar/local-highlight.nvim",
+    event = { "CursorHold", "CursorHoldI" },
+    dependencies = { "folke/snacks.nvim" },
+    opts = {
+      hlgroup = "Visual",
+    },
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {
+      scope = { enabled = false },
+    },
+  },
   -- {
   --   "smoka7/hop.nvim",
   --   cmd = { "HopWord", "HopLine", "HopLineStart", "HopWordCurrentLine", "HopNodes" },
@@ -706,19 +703,6 @@ return {
     end,
   },
   {
-    "declancm/vim2vscode",
-    cmd = "Code",
-  },
-  -- {
-  --   "Weissle/persistent-breakpoints.nvim",
-  --   ft = "go",
-  --   config = function()
-  --     require("persistent-breakpoints").setup {
-  --       load_breakpoints_event = { "BufReadPost" },
-  --     }
-  --   end,
-  -- },
-  {
     "mawkler/modicator.nvim",
     event = "VeryLazy",
     init = function()
@@ -734,28 +718,28 @@ return {
       },
     },
   },
-  {
-    "mvllow/modes.nvim",
-    tag = "v0.2.0",
-    event = "VeryLazy",
-    config = function()
-      require("modes").setup {
-        colors = {
-          bg = "", -- Optional bg param, defaults to Normal hl group
-          copy = "#f5c359",
-          delete = "#c75c6a",
-          insert = "#78ccc5",
-          visual = "#9745be",
-        },
-        -- Set opacity for cursorline and number background
-        line_opacity = 0.15,
-
-        -- Disable modes highlights in specified filetypes
-        -- Please PR commonly ignored filetypes
-        ignore_filetypes = { "NvimTree", "TelescopePrompt" },
-      }
-    end,
-  },
+  -- {
+  --   "mvllow/modes.nvim",
+  --   tag = "v0.2.0",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("modes").setup {
+  --       colors = {
+  --         bg = "", -- Optional bg param, defaults to Normal hl group
+  --         copy = "#f5c359",
+  --         delete = "#c75c6a",
+  --         insert = "#78ccc5",
+  --         visual = "#9745be",
+  --       },
+  --       -- Set opacity for cursorline and number background
+  --       line_opacity = 0.30,
+  --
+  --       -- Disable modes highlights in specified filetypes
+  --       -- Please PR commonly ignored filetypes
+  --       ignore_filetypes = { "NvimTree", "TelescopePrompt" },
+  --     }
+  --   end,
+  -- },
   {
     "MagicDuck/grug-far.nvim",
     event = "VeryLazy",

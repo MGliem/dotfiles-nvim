@@ -280,7 +280,7 @@ M.cmp = {
     {
       name = "nvim_lsp",
       keyword_length = 2,
-      max_item_count = 100,
+      max_item_count = 50,
       -- entry_filter = function(entry, ctx)
       --   return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
       -- end,
@@ -299,7 +299,7 @@ M.cmp = {
     --   max_item_count = 2,
     -- },
     { name = "treesitter" },
-    { name = "luasnip", max_item_count = 2 },
+    { name = "luasnip", max_item_count = 10 },
     { name = "lazydev" },
     { name = "luasnip_choice" },
   },

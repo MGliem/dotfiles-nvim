@@ -317,12 +317,12 @@ M.general = {
     -- ["<C-u>"] = { "<C-u>zz", " Scroll up", opts = { silent = true } },
 
     ["<leader>cs"] = { "<CMD>SymbolsOutline<CR>", " Symbols Outline" },
-    -- ["<leader>tr"] = {
-    --   function()
-    --     require("base46").toggle_transparency()
-    --   end,
-    --   "󰂵 Toggle transparency",
-    -- },
+    ["<leader>tr"] = {
+      function()
+        require("base46").toggle_transparency()
+      end,
+      "󰂵 Toggle transparency",
+    },
     ["<leader>w"] = {
       function()
         if vim.bo.buftype == "terminal" then

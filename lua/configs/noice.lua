@@ -183,7 +183,7 @@ noice.setup {
       enabled = false,
     },
     signature = {
-      enabled = true,
+      enabled = false,
       auto_open = {
         enabled = false,
         trigger = false,
