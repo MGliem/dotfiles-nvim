@@ -5,17 +5,18 @@ return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
       provider = "deepseek",
-      vendors = {
+      providers = {
         deepseek = {
           __inherited_from = "openai",
           api_key_name = "DEEPSEEK_API_KEY",
           endpoint = "https://api.deepseek.com",
           model = "deepseek-coder",
-          max_tokens = 8192,
+          extra_request_body = {
+            max_tokens = 8192,
+          },
         },
       },
     },
@@ -718,28 +719,28 @@ return {
       },
     },
   },
-  -- {
-  --   "mvllow/modes.nvim",
-  --   tag = "v0.2.0",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modes").setup {
-  --       colors = {
-  --         bg = "", -- Optional bg param, defaults to Normal hl group
-  --         copy = "#f5c359",
-  --         delete = "#c75c6a",
-  --         insert = "#78ccc5",
-  --         visual = "#9745be",
-  --       },
-  --       -- Set opacity for cursorline and number background
-  --       line_opacity = 0.30,
-  --
-  --       -- Disable modes highlights in specified filetypes
-  --       -- Please PR commonly ignored filetypes
-  --       ignore_filetypes = { "NvimTree", "TelescopePrompt" },
-  --     }
-  --   end,
-  -- },
+  {
+    "mvllow/modes.nvim",
+    tag = "v0.3.0",
+    event = "VeryLazy",
+    config = function()
+      require("modes").setup {
+        colors = {
+          bg = "", -- Optional bg param, defaults to Normal hl group
+          copy = "#f5c359",
+          delete = "#c75c6a",
+          insert = "#78ccc5",
+          visual = "#9745be",
+        },
+        -- Set opacity for cursorline and number background
+        line_opacity = 0.30,
+
+        -- Disable modes highlights in specified filetypes
+        -- Please PR commonly ignored filetypes
+        ignore = { "NvimTree", "TelescopePrompt" },
+      }
+    end,
+  },
   {
     "MagicDuck/grug-far.nvim",
     event = "VeryLazy",
