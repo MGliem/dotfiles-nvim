@@ -703,22 +703,22 @@ return {
       require("mini.ai").setup()
     end,
   },
-  {
-    "mawkler/modicator.nvim",
-    event = "VeryLazy",
-    init = function()
-      -- These are required for Modicator to work
-      vim.o.cursorline = true
-      vim.o.number = true
-      -- vim.o.termguicolors = true
-    end,
-    opts = {
-      show_warnings = false,
-      highlights = {
-        defaults = { bold = true },
-      },
-    },
-  },
+  -- {
+  --   "mawkler/modicator.nvim",
+  --   event = "VeryLazy",
+  --   init = function()
+  --     -- These are required for Modicator to work
+  --     vim.o.cursorline = true
+  --     vim.o.number = true
+  --     -- vim.o.termguicolors = true
+  --   end,
+  --   opts = {
+  --     show_warnings = false,
+  --     highlights = {
+  --       defaults = { bold = true },
+  --     },
+  --   },
+  -- },
   {
     "mvllow/modes.nvim",
     tag = "v0.3.0",
@@ -733,7 +733,12 @@ return {
           visual = "#9745be",
         },
         -- Set opacity for cursorline and number background
-        line_opacity = 0.30,
+        line_opacity = {
+          visual = 0.5,
+          copy = 0.3,
+          delete = 0.5,
+          insert = 0.25,
+        },
 
         -- Disable modes highlights in specified filetypes
         -- Please PR commonly ignored filetypes

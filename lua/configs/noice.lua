@@ -5,6 +5,7 @@ if not present then
 end
 
 noice.setup {
+  background_colour = "#000000",
   messages = {
     enabled = true,
     view = "notify",
