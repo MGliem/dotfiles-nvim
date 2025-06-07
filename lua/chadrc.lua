@@ -59,8 +59,8 @@ M.base46 = {
     "notify",
   },
 
-  theme = "vscode_dark",
-  theme_toggle = { "vscode_dark", "one_light" },
+  theme = "catppuccin",
+  theme_toggle = { "catppuccin", "one_light" },
 
   hl_override = highlights.override,
   hl_add = highlights.add,

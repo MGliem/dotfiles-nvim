@@ -21,13 +21,13 @@ M.override = {
   DiagnosticHint = { bg = "#254435", fg = "#16C53B" },
   --
   -- Diff
-  DiffAdd = { bg = "#34462F", fg = "#16C53B"  },
+  DiffAdd = { bg = "#34462F", fg = "#16C53B" },
   DiffDelete = { bg = "#462F2F", fg = "#FF6363" },
   DiffChange = { bg = "#2F4146", fg = "#FA973A" },
   DiffText = { bg = "#463C2F", fg = "#dddddd" },
   --
-  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#a25d09" }),
-  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#FA973A" }),
+  ["LineNrAbove"] = { fg = "#a25d09" },
+  ["LineNrBelow"] = { fg = "#FA973A" },
   --   TelescopePromptNormal = { blend = 100 },
   --   -- TreeSitter highlights
   Repeat = { fg = "pink" },
@@ -43,20 +43,22 @@ M.override = {
   ["@type.builtin"] = { link = "Type" },
   ["@tag"] = { link = "Type" },
   --   ["@variable.go"] = { fg = "green" },
-  --   ["@variable"] = { fg = "nord_blue" },
-  --   ["@attribute"] = { link = "Constant" },
-  --   ["@function.builtin"] = { fg = "cyan" },
-  --   ["@function.method"] = { link = "Function" },
-  --   ["@function.method.call"] = { link = "Function" },
-  --   ["@function.call"] = { link = "Function" },
+  ["@variable"] = { fg = "nord_blue" },
+  ["@attribute"] = { link = "Constant" },
+  ["@function.builtin"] = { fg = "cyan" },
+  ["@function.method"] = { link = "Function" },
+  ["@function.method.call"] = { link = "Function" },
+  ["@function.call"] = { link = "Function" },
+  ["@tag.builtin"] = { fg = "blue", bg = "NONE" },
+  ["@tag.delimiter"] = { fg = "gray", bg = "NONE" },
+  ["@tag.attribute"] = { fg = "#67d7f7", bg = "NONE" },
   --
   --   ["@function.call.go"] = { fg = "green" },
   ["@variable.member"] = { link = "@variable" },
-  ["@tag.attribute"] = { link = "@variable" },
   --   ["@constructor"] = { fg = "blue" },
   --
-  --   ["Function"] = { fg = "yellow" },
-  --   ["@function"] = { fg = "yellow" },
+  ["Function"] = { fg = "yellow" },
+  ["@function"] = { fg = "yellow" },
   --   ["@property"] = { fg = "blue" },
   --
   ["@keyword.import"] = { link = "Include" },
@@ -124,10 +126,6 @@ M.override = {
   --    hl(0, '@type', { fg = c.vscBlueGreen, bg = 'NONE' })
   --    hl(0, '@type.qualifier', { fg = c.vscBlue, bg = 'NONE' })
   --    hl(0, '@structure', { fg = c.vscLightBlue, bg = 'NONE' })
-  --    hl(0, '@tag', { fg = c.vscBlue, bg = 'NONE' })
-  --    hl(0, '@tag.builtin', { fg = c.vscBlue, bg = 'NONE' })
-  --    hl(0, '@tag.delimiter', { fg = c.vscGray, bg = 'NONE' })
-  --    hl(0, '@tag.attribute', { fg = c.vscLightBlue, bg = 'NONE' })
   --
   --    hl(0, '@text', { fg = c.vscFront, bg = 'NONE' }) -- Legacy
   --    hl(0, '@markup.strong', { fg = isDark and c.vscBlue or c.vscViolet, bold = true })
