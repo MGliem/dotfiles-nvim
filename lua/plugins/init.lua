@@ -439,7 +439,10 @@ return {
     opts = {
       keymaps = {
         visual = {
-          variable_below = "<leader><leader>p",
+          variable_below = "<leader><leader>d",
+        },
+        normal = {
+          variable_below = "<leader><leader>d",
         },
       },
     },

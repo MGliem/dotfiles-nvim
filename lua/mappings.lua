@@ -285,12 +285,12 @@ map("n", "c", '"_c', silent)
 -- map("n", "<C-ScrollWheelDown>", "<C-o>", { noremap = true, silent = true })
 
 --------------------------------------------------- Testing ---------------------------------------------------
-map("n", "<leader>nt", function()
-  require("neotest").run.run(vim.fn.expand "%")
-end, { desc = "󰤑 Run neotest" })
-
-map("n", "<leader>tc", "<cmd>CoverageToggle<cr>", { desc = "Coverage in gutter" })
-map("n", "<leader><leader>c", "<cmd>CoverageLoad<cr><cmd>CoverageSummary<cr>", { desc = "Coverage summary" })
+-- map("n", "<leader>nt", function()
+--   require("neotest").run.run(vim.fn.expand "%")
+-- end, { desc = "󰤑 Run neotest" })
+--
+-- map("n", "<leader>tc", "<cmd>CoverageToggle<cr>", { desc = "Coverage in gutter" })
+-- map("n", "<leader><leader>c", "<cmd>CoverageLoad<cr><cmd>CoverageSummary<cr>", { desc = "Coverage summary" })
 
 --------------------------------------------------- Debugging ---------------------------------------------------
 
