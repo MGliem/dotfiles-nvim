@@ -20,6 +20,11 @@ M.override = {
   DiagnosticInfo = { bg = "#20355A", fg = "#387EFF" },
   DiagnosticHint = { bg = "#254435", fg = "#16C53B" },
   --
+  -- Diff
+  DiffAdd = { bg = "#34462F", fg = "#16C53B"  },
+  DiffDelete = { bg = "#462F2F", fg = "#FF6363" },
+  DiffChange = { bg = "#2F4146", fg = "#FA973A" },
+  DiffText = { bg = "#463C2F", fg = "#dddddd" },
   --
   vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#a25d09" }),
   vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#FA973A" }),
@@ -244,11 +249,6 @@ M.add = {
   RainbowDelimiterGreen = { fg = "green" },
   RainbowDelimiterViolet = { fg = "purple" },
   RainbowDelimiterCyan = { fg = "cyan" },
-
-  -- Diff
-  DiffChange = { fg = "yellow", bg = "cyan" },
-  DiffAdd = { fg = "vibrant_green", bg = "pink" },
-  DiffText = { fg = "white", bg = "red", bold = true },
 
   DiffviewDim1 = { fg = "grey" },
   DiffviewReference = { fg = "cyan" },
