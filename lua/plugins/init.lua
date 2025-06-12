@@ -661,14 +661,14 @@ return {
       extras = { named_parameters = true },
     },
   },
-  {
-    "tzachar/local-highlight.nvim",
-    event = { "CursorHold", "CursorHoldI" },
-    dependencies = { "folke/snacks.nvim" },
-    opts = {
-      hlgroup = "Visual",
-    },
-  },
+  -- {
+  --   "tzachar/local-highlight.nvim",
+  --   event = { "CursorHold", "CursorHoldI" },
+  --   dependencies = { "folke/snacks.nvim" },
+  --   opts = {
+  --     hlgroup = "Visual",
+  --   },
+  -- },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
