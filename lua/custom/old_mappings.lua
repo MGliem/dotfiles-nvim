@@ -162,9 +162,9 @@ M.development = {
       "󰌁 Invert text",
     },
     ["<leader>fm"] = {
-      -- function()
-      --   vim.lsp.buf.format { async = true }
-      -- end,
+      function()
+        vim.lsp.buf.format { async = true, timeout_ms = 2000 }
+      end,
       "<CMD>Format<CR>",
       " Lsp formatting",
     },
@@ -174,20 +174,20 @@ M.development = {
     --   end,
     --   "Hover",
     -- },
-    ["gd"] = {
-      -- function()
-      --   vim.lsp.buf.definition()
-      -- end,
-      "<CMD>Glance definitions<CR>",
-      "󰑊 Go to definition",
-    },
-    ["gi"] = {
-      -- function()
-      --   vim.lsp.buf.implementation()
-      -- end,
-      "<CMD>Glance implementations<CR>",
-      "󰑊 Go to implementation",
-    },
+    -- ["gd"] = {
+    --   -- function()
+    --   --   vim.lsp.buf.definition()
+    --   -- end,
+    --   "<CMD>Glance definitions<CR>",
+    --   "󰑊 Go to definition",
+    -- },
+    -- ["gi"] = {
+    --   -- function()
+    --   --   vim.lsp.buf.implementation()
+    --   -- end,
+    --   "<CMD>Glance implementations<CR>",
+    --   "󰑊 Go to implementation",
+    -- },
   },
 }
 
@@ -477,8 +477,8 @@ M.telescope = {
                 len = len + 1
                 -- get relative name of buffer without leading slash
                 buffers[len] = "^"
-                  .. literalize(string.gsub(vim.api.nvim_buf_get_name(buffer), literalize(vim.loop.cwd()), ""):sub(2))
-                  .. "$"
+                    .. literalize(string.gsub(vim.api.nvim_buf_get_name(buffer), literalize(vim.loop.cwd()), ""):sub(2))
+                    .. "$"
               end
             end
 
