@@ -388,9 +388,12 @@ map(
 )
 map("n", "<leader>gef", "<cmd>lua vim.diagnostic.open_float({ border = 'rounded', max_width = 100 })<CR>", silent)
 
-map("n", "<leader>ci", "<cmd>TSToolsAddMissingImports<CR>", silent)
-map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<CR>", silent)
-map("n", "<leader>cf", "<cmd>TSToolsFixAll<CR>", silent)
+-- map("n", "<leader>ci", "<cmd>TSToolsAddMissingImports<CR>", silent)
+-- map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<CR>", silent)
+-- map("n", "<leader>cf", "<cmd>TSToolsFixAll<CR>", silent)
+map("n", "<leader>ci", "<cmd>VtsExec add_missing_imports<CR>", silent)
+map("n", "<leader>cr", "<cmd>VtsExec remove_unused_imports<CR>", silent)
+map("n", "<leader>cf", "<cmd>VtsExec fix_all<CR>", silent)
 
 ---------------------------------------------------- Session ---------------------------------------------------
 map("n", "<leader>ss", "<cmd>SessionSave<CR>", silent)

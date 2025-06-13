@@ -1327,18 +1327,28 @@ return {
     end,
   },
   {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    "yioneko/nvim-vtsls",
     ft = {
       "javascript",
       "typescript",
       "javascriptreact",
       "typescriptreact",
     },
-    config = function()
-      require "configs.ts"
-    end,
   },
+
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   ft = {
+  --     "javascript",
+  --     "typescript",
+  --     "javascriptreact",
+  --     "typescriptreact",
+  --   },
+  --   config = function()
+  --     require "configs.ts"
+  --   end,
+  -- },
 
   -- {
   --   "hinell/lsp-timeout.nvim",
