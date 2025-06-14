@@ -164,8 +164,8 @@ autocmd("BufWritePre", {
 
 autocmd({ "BufNewFile", "BufRead" }, {
   pattern = { "**/node_modules/**", "node_modules", "/node_modules/*" },
-  callback = function()
-    vim.diagnostic.enable(false)
+  callback = function(args)
+    vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
 })
 
@@ -394,12 +394,6 @@ autocmd("FileType", {
             nnoremap <buffer><silent> q :close<CR>
             set nobuflisted
         ]],
-})
-
-autocmd({ "BufRead", "BufNewFile" }, {
-  desc = "Disable diagnostics in node_modules",
-  pattern = "*/node_modules/*",
-  command = "lua vim.diagnostic.enable(false)",
 })
 
 -- autocmd("BufWritePre", {
