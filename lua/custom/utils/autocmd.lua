@@ -89,7 +89,7 @@ autocmd({ "FocusLost", "BufLeave" }, {
     if vim.fn.mode() == "n" then
       vim.defer_fn(function()
         if vim.api.nvim_buf_is_valid(buf) then
-          require("conform").format { bufnr = buf }
+          require("conform").format { bufnr = buf, async = true, quiet = true }
         end
       end, 100)
     end

@@ -362,6 +362,16 @@ map(
 
 map("n", "<leader>ctl", "^ea type<Esc>", { desc = "Import type same line" })
 
+--Format with conform
+map("n", "<leader>fm", function()
+  require("conform").format { async = true, quiet = true }
+end, { desc = " Conform formatting" })
+
+--Invert text with nvim-toggler (example: true <=> false)
+map("n", "<leader>i", function()
+  require("nvim-toggler").toggle()
+end, { desc = "󰌁 Invert text" })
+
 ------------------------------------------------- diagnostics ---------------------------------------------------
 
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })

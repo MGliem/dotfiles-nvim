@@ -110,86 +110,13 @@ local function duplicate_lines(direction)
   end
 end
 
-M.folder = {
-  n = {
-    ["<leader>af"] = {
-      function()
-        local foldclosed = vim.fn.foldclosed(vim.fn.line ".")
-        if foldclosed == -1 then
-          vim.cmd "silent! normal! zc"
-        else
-          vim.cmd "silent! normal! zo"
-        end
-      end,
-      "󰴋 Toggle folder",
-    },
-  },
-}
+M.folder = {}
 
 M.comment = {
-  plugin = true,
-
-  -- toggle comment in both modesx
-  n = {
-    ["<A-/>"] = {
-      function()
-        require("Comment.api").toggle.linewise.current()
-      end,
-      "  Toggle comment",
-    },
-    ["<D-/>"] = {
-      function()
-        require("Comment.api").toggle.linewise.current()
-      end,
-      "  Toggle comment",
-    },
-  },
-
-  v = {
-    ["<A-/>"] = {
-      "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-      "  Toggle comment",
-    },
-  },
+  plugin = false,
 }
 
-M.development = {
-  n = {
-    ["<leader>i"] = {
-      function()
-        require("nvim-toggler").toggle()
-      end,
-      "󰌁 Invert text",
-    },
-    ["<leader>fm"] = {
-      function()
-        vim.lsp.buf.format { async = true, timeout_ms = 2000 }
-      end,
-      "<CMD>Format<CR>",
-      " Lsp formatting",
-    },
-    -- ["K"] = {
-    --   function()
-    --     vim.lsp.buf.hover()
-    --   end,
-    --   "Hover",
-    -- },
-    -- ["gd"] = {
-    --   -- function()
-    --   --   vim.lsp.buf.definition()
-    --   -- end,
-    --   "<CMD>Glance definitions<CR>",
-    --   "󰑊 Go to definition",
-    -- },
-    -- ["gi"] = {
-    --   -- function()
-    --   --   vim.lsp.buf.implementation()
-    --   -- end,
-    --   "<CMD>Glance implementations<CR>",
-    --   "󰑊 Go to implementation",
-    -- },
-  },
-}
+M.development = {}
 
 M.text = {
   i = {
@@ -219,8 +146,8 @@ M.text = {
     -- ["<C-c>"] = { "y", " Copy" },
     -- ["p"] = { "p`[v`]=", "󰆒 Paste" },
     ["<leader><leader>p"] = { "printf('`[%s`]', getregtype()[0])", "Reselect last pasted area", expr = true },
-    ["<C-Up>"] = { "<CMD>m .-2<CR>==", "󰜸 Move line up" },
-    ["<C-Down>"] = { "<CMD>m .+1<CR>==", "󰜯 Move line down" },
+    -- ["<C-Up>"] = { "<CMD>m .-2<CR>==", "󰜸 Move line up" },
+    -- ["<C-Down>"] = { "<CMD>m .+1<CR>==", "󰜯 Move line down" },
     -- Renamer
     -- ["<C-R>"] = { "<CMD>:MurenToggle<CR>", "󱝪 Toggle Search" },
     ["<leader>sp"] = { "<CMD>:TSJToggle<CR>", "󰯌 Toggle split/join" },
@@ -245,17 +172,17 @@ M.text = {
   },
 
   v = {
-    ["<C-Up>"] = { ":m'<-2<CR>gv=gv", "󰜸 Move selection up", opts = { silent = true } },
-    ["<C-Down>"] = { ":m'>+1<CR>gv=gv", "󰜯 Move selection down", opts = { silent = true } },
-    ["<Home>"] = { "gg", "Home" },
-    ["<End>"] = { "G", "End" },
-    ["y"] = { "y`]", "Yank and move to end" },
+    -- ["<C-Up>"] = { ":m'<-2<CR>gv=gv", "󰜸 Move selection up", opts = { silent = true } },
+    -- ["<C-Down>"] = { ":m'>+1<CR>gv=gv", "󰜯 Move selection down", opts = { silent = true } },
+    -- ["<Home>"] = { "gg", "Home" },
+    -- ["<End>"] = { "G", "End" },
+    -- ["y"] = { "y`]", "Yank and move to end" },
     -- Indent backward/forward:
     ["<"] = { "<gv", " Ident backward", opts = { silent = false } },
     [">"] = { ">gv", " Ident forward", opts = { silent = false } },
 
-    ["<C-Left>"] = { "<ESC>_", "󰜲 Move to beginning of line" },
-    ["<C-Right>"] = { "<ESC>$", "󰜵 Move to end of line" },
+    -- ["<C-Left>"] = { "<ESC>_", "󰜲 Move to beginning of line" },
+    -- ["<C-Right>"] = { "<ESC>$", "󰜵 Move to end of line" },
     ["$"] = {
       function()
         if vim.fn.mode() == "v" then
@@ -271,10 +198,10 @@ M.text = {
 
   c = {
     -- Autocomplete for brackets:
-    ["("] = { "()<left>", "Auto complete (", opts = { silent = false } },
-    ["<"] = { "<><left>", "Auto complete <", opts = { silent = false } },
-    ['"'] = { '""<left>', [[Auto complete "]], opts = { silent = false } },
-    ["'"] = { "''<left>", "Auto complete '", opts = { silent = false } },
+    -- ["("] = { "()<left>", "Auto complete (", opts = { silent = false } },
+    -- ["<"] = { "<><left>", "Auto complete <", opts = { silent = false } },
+    -- ['"'] = { '""<left>', [[Auto complete "]], opts = { silent = false } },
+    -- ["'"] = { "''<left>", "Auto complete '", opts = { silent = false } },
   },
 }
 
@@ -299,11 +226,11 @@ M.window = {
 
 M.general = {
   n = {
-    [";"] = {
-      "<CMD>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<CR>",
-      "Resume telescope",
-      opts = { nowait = true },
-    },
+    -- [";"] = {
+    --   "<CMD>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<CR>",
+    --   "Resume telescope",
+    --   opts = { nowait = true },
+    -- },
     -- ["<C-c>"] = { "<CMD> Telescope commander<CR>", "󰘳 Find files" },
 
     -- Keep cursor in the center line when C-D / C-U
@@ -436,12 +363,12 @@ M.telescope = {
     ["<leader>li"] = { "<CMD>Telescope highlights<CR>", "Highlights" },
     ["<leader>fk"] = { "<CMD>Telescope keymaps<CR>", " Find keymaps" },
     ["<leader>fs"] = { "<CMD>Telescope lsp_document_symbols<CR>", " Find document symbols" },
-    ["<leader>fa"] = {
-      function()
-        require("search").open()
-      end,
-      " Find",
-    },
+    -- ["<leader>fa"] = {
+    --   function()
+    --     require("search").open()
+    --   end,
+    --   " Find",
+    -- },
     ["<leader>fu"] = { "<CMD>Telescope undo<CR>", " Undo tree" },
     ["<leader>fre"] = {
       function()
@@ -477,8 +404,8 @@ M.telescope = {
                 len = len + 1
                 -- get relative name of buffer without leading slash
                 buffers[len] = "^"
-                    .. literalize(string.gsub(vim.api.nvim_buf_get_name(buffer), literalize(vim.loop.cwd()), ""):sub(2))
-                    .. "$"
+                  .. literalize(string.gsub(vim.api.nvim_buf_get_name(buffer), literalize(vim.loop.cwd()), ""):sub(2))
+                  .. "$"
               end
             end
 
@@ -496,7 +423,7 @@ M.telescope = {
 }
 
 M.tabufline = {
-  plugin = true,
+  plugin = false,
 
   n = {
     -- cycle through buffers

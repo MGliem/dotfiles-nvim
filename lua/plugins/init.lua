@@ -683,15 +683,15 @@ return {
   --     require("hop").setup { keys = "etovxqpdygfblzhckisuran" }
   --   end,
   -- },
-  -- {
-  --   "nguyenvukhang/nvim-toggler",
-  --   event = "BufReadPost",
-  --   config = function()
-  --     require("nvim-toggler").setup {
-  --       remove_default_keybinds = true,
-  --     }
-  --   end,
-  -- },
+  {
+    "nguyenvukhang/nvim-toggler",
+    event = "BufReadPost",
+    config = function()
+      require("nvim-toggler").setup {
+        remove_default_keybinds = true,
+      }
+    end,
+  },
   {
     "echasnovski/mini.surround",
     version = "*",
