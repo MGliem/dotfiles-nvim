@@ -23,7 +23,7 @@ require("nvim-treesitter.configs").setup {
   ignore_install = { "haskell" }, -- list of parsers to ignore installing
   highlight = {
     enable = true,
-    -- disable = { "markdown", "markdown_inline" }, -- Désactive le highlight pour le markdown
+    disable = { "markdown", "markdown_inline" }, -- Désactive le highlight pour le markdown
     additional_vim_regex_highlighting = false, -- Évite les conflits avec d'autres highlighters
   },
   autotag = {

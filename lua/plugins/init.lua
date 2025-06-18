@@ -140,6 +140,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     dependencies = {
       "windwp/nvim-ts-autotag",
       "filNaj/tree-setter",
@@ -1318,11 +1319,12 @@ return {
         cspell.code_actions.with { config = config },
       }
       -- Define the debounce value
-      local debounce_value = 100
+      local debounce_value = 5000
       return {
         sources = sources,
         debounce = debounce_value,
-        debug = true,
+        debug = false,
+        on_event = { "InsertLeave" },
       }
     end,
   },
