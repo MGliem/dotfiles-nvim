@@ -15,10 +15,10 @@ M.override = {
   CmpDoc = { bg = "black" },
   CmpDocBorder = { fg = "black", bg = "black" },
   --
-  DiagnosticError = { bg = "#4B252C", fg = "#FF6363" },
-  DiagnosticWarn = { bg = "#403733", fg = "#FA973A" },
-  DiagnosticInfo = { bg = "#20355A", fg = "#387EFF" },
-  DiagnosticHint = { bg = "#254435", fg = "#16C53B" },
+  DiagnosticError = { bg = "none", fg = "#FF6363" },
+  DiagnosticWarn = { bg = "none", fg = "#FA973A" },
+  DiagnosticInfo = { bg = "none", fg = "#387EFF" },
+  DiagnosticHint = { bg = "none", fg = "#16C53B" },
   --
   -- Diff
   DiffAdd = { bg = "#34462F", fg = "#16C53B" },
