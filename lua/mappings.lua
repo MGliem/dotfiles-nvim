@@ -392,17 +392,15 @@ end, { desc = "Toggle virtual text" })
 map(
   "n",
   "<leader>gen",
-  "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>",
-  silent
+  "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, float = { border = 'rounded', max_width = 100 }})<CR>",
+  { desc = "Next error" }
 )
 map(
   "n",
   "<leader>gep",
-  "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>",
-  silent
+  "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR, float = { border = 'rounded', max_width = 100 }})<CR>",
+  { desc = "Previous error" }
 )
-map("n", "<leader>gef", "<cmd>lua vim.diagnostic.open_float({ border = 'rounded', max_width = 100 })<CR>", silent)
-
 -- map("n", "<leader>ci", "<cmd>TSToolsAddMissingImports<CR>", silent)
 -- map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<CR>", silent)
 -- map("n", "<leader>cf", "<cmd>TSToolsFixAll<CR>", silent)
