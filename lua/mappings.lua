@@ -212,6 +212,9 @@ map("v", "<leader>mlt", function()
   vim.cmd "startinsert"
 end, { desc = "[P]Convert to link (new tab)" })
 
+-- Paste Image
+map("n", "<leader><leader>ip", "<cmd>PasteImage<cr>", { desc = "Paste image" })
+
 --------------------------------------------------- Movements ---------------------------------------------------
 -- map({ "n", "i" }, "<C-h>", function()
 --   move_or_create_win "h"

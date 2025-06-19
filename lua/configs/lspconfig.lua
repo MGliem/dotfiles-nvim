@@ -385,6 +385,9 @@ vim.lsp.config("vtsls", {
           enableServerSideFuzzyMatch = true,
           entriesLimit = 50,
         },
+        diagnostics = {
+          debounce = 500, -- Délai en millisecondes
+        },
       },
     },
     javascript = {
@@ -703,14 +706,14 @@ local function match_file_operation_filter(filter, name, type)
   return vim.regex(regex_str):match_str(name) ~= nil
 end
 
-local api = require("nvim-tree.api")
+local api = require "nvim-tree.api"
 api.events.subscribe(api.events.Event.NodeRenamed, function(data)
   local stat = vim.loop.fs_stat(data.new_name)
   if not stat then
     return
   end
   local type = ({ file = "file", directory = "folder" })[stat.type]
-  local clients = vim.lsp.get_clients({})
+  local clients = vim.lsp.get_clients {}
   for _, client in ipairs(clients) do
     if check_folders_contains(client.workspace_folders, data.old_name) then
       local filters = vim.tbl_get(client.server_capabilities, "workspace", "fileOperations", "didRename", "filters")
