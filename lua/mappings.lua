@@ -241,6 +241,8 @@ map("n", "<C-j>", "<C-w>j", silent)
 map("n", "<C-k>", "<C-w>k", silent)
 map("n", "<C-l>", "<C-w>l", silent)
 
+--move middle of text
+map("n", "m", ":exe 'normal '.(virtcol('$')/2).'|'<cr>", silent)
 -- H to move to the first non-blank character of the line
 map("n", "H", "^", silent)
 
