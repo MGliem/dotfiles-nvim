@@ -3,6 +3,7 @@ local overrides = require "configs.overrides"
 local cmp_opt = require "configs.cmp"
 
 return {
+  --------------------------- AI plugins ---------------------------
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
@@ -57,6 +58,22 @@ return {
       --   },
     },
   },
+  {
+    "piersolenski/wtf.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {},
+    config = function()
+      require("wtf").setup {
+        popup_type = "popup",
+        openai_api_key = "$DEEPSEEK_API_KEY",
+        openai_model_id = "deepseek-coder",
+        openai_base_url = "https://api.deepseek.com",
+      }
+    end,
+  },
+  -------------------------------------------------------------------------------
   {
     "mason-org/mason.nvim",
     opts = overrides.mason,

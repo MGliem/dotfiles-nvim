@@ -379,6 +379,22 @@ end, { desc = "󰌁 Invert text" })
 
 ------------------------------------------------- diagnostics ---------------------------------------------------
 
+map("n", "<leader>da", function()
+  require("wtf").ai()
+end, { desc = "Debug diagnostic with AI" })
+
+map("n", "<leader>dw", function()
+  require("wtf").search()
+end, { desc = "Search diagnostic with Google" })
+
+map("n", "<leader>dh", function()
+  require("wtf").history()
+end, { desc = "Populate the quickfix list with previous chat history" })
+
+map("n", "<leader>dg", function()
+  require("wtf").grep_history()
+end, { desc = "Grep previous chat history with Telescope" })
+
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 
 map("n", "<leader>tv", function()
