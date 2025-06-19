@@ -735,7 +735,7 @@ return {
           next = "<leader>mn",
           prev = "<leader>mp",
           delete_buf = "<leader>mdb",
-          delete_line = "<leader>mdl"
+          delete_line = "<leader>mdl",
         },
       }
     end,
@@ -999,10 +999,16 @@ return {
         enabled = true,
       }
     end,
+    opts = {
+      blame_options = { "-w" },
+    },
   },
   {
     "FabijanZulj/blame.nvim",
-    cmd = "ToggleBlame",
+    lazy = false,
+    config = function()
+      require("blame").setup {}
+    end,
   },
   -- {
   --   "akinsho/git-conflict.nvim",
