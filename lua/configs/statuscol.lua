@@ -57,6 +57,17 @@ require("statuscol").setup {
       auto = true,
       click = "v:lua.ScSa",
     },
+    -- Segment: Add padding
+    {
+      text = { " " },
+    },
+    -- segment: Show Marks
+    {
+      text = { builtin.marksfunc },
+      click = "v:lua.ScLa",
+      condition = { true, builtin.not_empty },
+      auto = true,
+    },
     -- Segment: Show line number
     {
       text = { " ", " ", builtin.lnumfunc, " " },

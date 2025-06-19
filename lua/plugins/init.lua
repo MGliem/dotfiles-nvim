@@ -724,6 +724,23 @@ return {
   --   },
   -- },
   {
+    "chentoast/marks.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function()
+      require("marks").setup {
+        default_mappings = false,
+        mappings = {
+          set = "<leader>ma",
+          next = "<leader>mn",
+          prev = "<leader>mp",
+          delete_buf = "<leader>mdb",
+          delete_line = "<leader>mdl"
+        },
+      }
+    end,
+  },
+  {
     "mvllow/modes.nvim",
     tag = "v0.3.0",
     event = "VeryLazy",
@@ -983,10 +1000,10 @@ return {
       }
     end,
   },
-  -- {
-  --   "FabijanZulj/blame.nvim",
-  --   cmd = "ToggleBlame",
-  -- },
+  {
+    "FabijanZulj/blame.nvim",
+    cmd = "ToggleBlame",
+  },
   -- {
   --   "akinsho/git-conflict.nvim",
   --   event = "VeryLazy",
