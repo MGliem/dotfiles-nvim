@@ -5,7 +5,7 @@ M.override = {
   -- Cursor = { bg = "white", fg = "black2" },
   CursorLine = { bg = "#000000" },
   Visual = { bg = "#515151" },
-  Comment = { fg = "#2c6015", italic = true },
+  Comment = { fg = "#2d8f1d", italic = true },
   -- NvDashAscii = { fg = "purple", bg = "none" },
   IndentBlanklineContextStart = { bg = "none" },
 
@@ -21,10 +21,10 @@ M.override = {
   DiagnosticHint = { bg = "none", fg = "#16C53B" },
   --
   -- Diff
-  DiffAdd = { bg = "#34462F", fg = "#16C53B" },
-  DiffDelete = { bg = "#462F2F", fg = "#FF6363" },
-  DiffChange = { bg = "#2F4146", fg = "#FA973A" },
-  DiffText = { bg = "#463C2F", fg = "#dddddd" },
+  DiffAdd = { bg = "#454545", fg = "#16C53B" },
+  DiffDelete = { bg = "#454545", fg = "#FF6363" },
+  DiffChange = { bg = "#454545", fg = "#FA973A" },
+  DiffText = { bg = "#454545", fg = "#3982b0" },
   --
   ["LineNrAbove"] = { fg = "#a25d09" },
   ["LineNrBelow"] = { fg = "#FA973A" },
