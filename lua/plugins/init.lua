@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 local overrides = require "configs.overrides"
 local cmp_opt = require "configs.cmp"
 
@@ -999,9 +1000,6 @@ return {
         enabled = true,
       }
     end,
-    opts = {
-      blame_options = { "-w" },
-    },
   },
   {
     "FabijanZulj/blame.nvim",
@@ -1009,6 +1007,9 @@ return {
     config = function()
       require("blame").setup {}
     end,
+    opts = {
+      blame_options = { "-w" },
+    },
   },
   -- {
   --   "akinsho/git-conflict.nvim",
