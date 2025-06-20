@@ -25,6 +25,8 @@ M.override = {
   DiffDelete = { bg = "#454545", fg = "#FF6363" },
   DiffChange = { bg = "#454545", fg = "#FA973A" },
   DiffText = { bg = "#454545", fg = "#3982b0" },
+
+  LspSignatureActiveParameter = { fg = "#FA973A" },
   --
   ["LineNrAbove"] = { fg = "#a25d09" },
   ["LineNrBelow"] = { fg = "#FA973A" },
