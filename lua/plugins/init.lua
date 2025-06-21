@@ -343,6 +343,13 @@ return {
       char = {
         keys = {},
       },
+      modes = {
+        char = {
+          highlight = {
+            backdrop = false,
+          },
+        },
+      },
     },
     keys = {
       {
