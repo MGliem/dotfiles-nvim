@@ -262,28 +262,24 @@ map("n", "<S-Tab>", "<<", silent)
 -- map("v", "`", "u", silent)
 -- map("v", "<A-`>", "U", silent)
 
--- Save file by CTRL-S
--- map("n", "<C-s>", ":w<CR>", silent)
--- map("i", "<C-s>", "<ESC> :w<CR>", silent)
-
 -- Don't yank on delete char
-map("n", "x", '"_x', silent)
-map("n", "X", '"_X', silent)
+-- map("n", "x", '"_x', silent)
+-- map("n", "X", '"_X', silent)
 -- map("v", "x", '"_x', silent)
-map("v", "X", '"_X', silent)
+-- map("v", "X", '"_X', silent)
 
 -- don't yank on delete
-map("v", "d", '"_d', silent)
+-- map("v", "d", '"_d', silent)
 map("n", "dd", '<S-v>"_d', silent)
-map("n", "d$", 'v$"_d', silent)
+-- map("n", "d$", 'v$"_d', silent)
 
 -- Don't yank on visual paste
 -- map("v", "p", '"_dP', silent)
 -- Don't yank on change
-map("v", "c", '"_c', silent)
-map("v", "C", '"_C', silent)
-map("n", "C", '"_C', silent)
-map("n", "c", '"_c', silent)
+-- map("v", "c", '"_c', silent)
+-- map("v", "C", '"_C', silent)
+-- map("n", "C", '"_C', silent)
+-- map("n", "c", '"_c', silent)
 
 -- Navigation
 -- map("n", "<C-ScrollWheelUp>", "<C-i>", { noremap = true, silent = true })
