@@ -336,10 +336,10 @@ return {
     end,
   },
   ----------------------------------------- enhance plugins ------------------------------------------
-  { 
-	"chrisgrieser/nvim-puppeteer",
-	lazy = false, -- plugin lazy-loads itself. Can also load on filetypes.
-},
+  {
+    "chrisgrieser/nvim-puppeteer",
+    lazy = false, -- plugin lazy-loads itself. Can also load on filetypes.
+  },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -519,7 +519,7 @@ return {
   -- },
   {
     "gbprod/cutlass.nvim",
-    event = "BufReadPost",
+    event = "BufEnter",
     opts = {
       cut_key = "x",
       override_del = true,
