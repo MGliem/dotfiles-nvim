@@ -336,6 +336,10 @@ return {
     end,
   },
   ----------------------------------------- enhance plugins ------------------------------------------
+  { 
+	"chrisgrieser/nvim-puppeteer",
+	lazy = false, -- plugin lazy-loads itself. Can also load on filetypes.
+},
   {
     "folke/flash.nvim",
     event = "VeryLazy",
