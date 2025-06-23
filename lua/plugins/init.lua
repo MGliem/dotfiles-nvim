@@ -869,6 +869,13 @@ return {
   },
   ----------------------------------------- ui plugins ------------------------------------------
   {
+    "hedyhli/outline.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("outline").setup {}
+    end,
+  },
+  {
     "goolord/alpha-nvim",
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },

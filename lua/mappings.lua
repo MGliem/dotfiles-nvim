@@ -147,6 +147,8 @@ map({ "i", "s" }, "<C-J>", function()
   ls.jump(-1)
 end, { silent = true })
 
+map("n", "<leader>o", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
+
 --------------------------------------------------- Text ---------------------------------------------------
 map("n", "<S-CR>", "o<ESC>", { desc = " New line" })
 map("s", "<BS>", "<C-o>c", { desc = "Better backspace in select mode" })
