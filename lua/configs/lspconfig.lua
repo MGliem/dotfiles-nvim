@@ -321,7 +321,7 @@ vim.lsp.config("eslint", {
 })
 
 vim.lsp.config("jsonls", {
-  on_attach = custom_on_attach,
+  -- on_attach = custom_on_attach,
   -- capabilities = capabilities,
   settings = {
     json = {
@@ -427,13 +427,13 @@ vim.lsp.config("vtsls", {
   },
 })
 
-for _, server in ipairs(servers) do
-  vim.lsp.enable(server, true)
-end
+-- for _, server in ipairs(servers) do
+--   vim.lsp.enable(server, true)
+-- end
 
 require("mason-lspconfig").setup {
   ensure_installed = servers,
-  automatic_enable = false,
+  automatic_enable = true,
 }
 
 vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx, _)
