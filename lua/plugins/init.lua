@@ -869,6 +869,23 @@ return {
   },
   ----------------------------------------- ui plugins ------------------------------------------
   {
+    "gnikolaos/nx.nvim",
+    branch = "fix/read-configs",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+
+    opts = {
+      -- See below for config options
+      nx_cmd_root = "nx",
+    },
+
+    -- Plugin will load when you use these keys
+    keys = {
+      { "<leader>nx", "<cmd>Telescope nx actions<CR>", desc = "nx actions" },
+    },
+  },
+  {
     "hedyhli/outline.nvim",
     event = "VeryLazy",
     config = function()
