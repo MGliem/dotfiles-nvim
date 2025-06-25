@@ -21,10 +21,10 @@ M.override = {
   DiagnosticHint = { bg = "none", fg = "#16C53B" },
   --
   -- Diff
-  DiffAdd = { bg = "#454545", fg = "#16C53B" },
+  DiffAdd = { bg = "#1c1c1c", fg = "#16C53B" },
   DiffDelete = { bg = "#454545", fg = "#FF6363" },
   DiffChange = { bg = "#454545", fg = "#FA973A" },
-  DiffText = { bg = "#454545", fg = "#3982b0" },
+  DiffText = { bg = "#454545", fg = "#035ef4" },
 
   LspSignatureActiveParameter = { fg = "#FA973A" },
   --
