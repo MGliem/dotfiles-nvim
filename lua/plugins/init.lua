@@ -81,7 +81,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      -- "artemave/workspace-diagnostics.nvim",
+      "artemave/workspace-diagnostics.nvim",
       "jubnzv/virtual-types.nvim",
       {
         "mason-org/mason.nvim",

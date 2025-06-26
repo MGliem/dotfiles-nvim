@@ -300,6 +300,14 @@ map("n", "dd", '<S-v>"_d', silent)
 map("n", "<leader>cl", "yiwoconsole.log('<Esc>pa: ', <Esc>pa);", { desc = "Console.log" })
 
 --------------------------------------------------- LSP ---------------------------------------------------
+map("n", "<leader>wd", function()
+  for _, client in ipairs(vim.lsp.get_clients()) do
+    require("workspace-diagnostics").populate_workspace_diagnostics(client, 0)
+  end
+end, {
+  desc = "Populate workspace diagnostics",
+})
+
 map("n", "K", function()
   local api = vim.api
   local hover_win = vim.b.hover_preview
