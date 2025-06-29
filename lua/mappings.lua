@@ -97,7 +97,7 @@ end, { desc = "GrugFar Open" })
 map("n", "<leader>srw", function()
   require("grug-far").open { transient = true, prefills = { search = vim.fn.expand "<cword>" } }
 end, { desc = "GrugFar Word" })
-map("n", "<leader>srv", function()
+map("v", "<leader>srv", function()
   require("grug-far").with_visual_selection { transient = true }
 end, { desc = "GrugFar Visual" })
 
@@ -107,9 +107,15 @@ map("n", "<leader>srfw", function()
     prefills = { search = vim.fn.expand "<cword>", paths = vim.fn.expand "%" },
   }
 end, { desc = "GrugFar File Word" })
-map("n", "<leader>srfv", function()
+map("v", "<leader>srfv", function()
   require("grug-far").with_visual_selection { transient = true, prefills = { paths = vim.fn.expand "%" } }
 end, { desc = "GrugFar File Visual" })
+map("n", "<leader>srfo", function()
+  require("grug-far").open {
+    transient = true,
+    prefills = { paths = vim.fn.expand "%" },
+  }
+end, { desc = "GrugFar File" })
 
 -- GitSigns
 map("n", "]c", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next hunk" })
