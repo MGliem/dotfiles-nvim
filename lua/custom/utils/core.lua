@@ -248,10 +248,10 @@ M.tabufline = {
   show_numbers = false,
   enabled = false,
   lazyload = true,
-  modules = {
-    buttons = function()
-      return "%#SplitHl#%@v:lua.ClickUpdate@  %#SplitHl#%@v:lua.ClickGit@  %#SplitHl#%@v:lua.ClickSplit@ "
-    end,
+  -- modules = {
+  --   buttons = function()
+  --     return "%#SplitHl#%@v:lua.ClickUpdate@  %#SplitHl#%@v:lua.ClickGit@  %#SplitHl#%@v:lua.ClickSplit@ "
+  --   end,
     --   harpoon = function()
     --     local options = {
     --       icon = "󰀱 ",
@@ -295,7 +295,7 @@ M.tabufline = {
     --   "tabs",
     --   "harpoon",
     --   "buttons",
-  },
+  -- },
 }
 
 M.statusline = {

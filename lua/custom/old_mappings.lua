@@ -244,16 +244,6 @@ M.general = {
       end,
       "󰂵 Toggle transparency",
     },
-    ["<leader>w"] = {
-      function()
-        if vim.bo.buftype == "terminal" then
-          vim.cmd ":q"
-        else
-          require("nvchad.tabufline").close_buffer()
-        end
-      end,
-      " Close buffer",
-    },
   },
 }
 
@@ -425,45 +415,45 @@ M.telescope = {
 M.tabufline = {
   plugin = false,
 
-  n = {
-    -- cycle through buffers
-    ["<S-L>"] = {
-      function()
-        require("nvchad.tabufline").next()
-      end,
-      " Goto next buffer",
-    },
-
-    ["<D-l>"] = {
-      function()
-        require("nvchad.tabufline").prev()
-      end,
-      " Goto prev buffer",
-    },
-
-    -- close buffer + hide terminal buffer
-    ["<C-x>"] = {
-      function()
-        require("nvchad.tabufline").close_buffer()
-      end,
-      " Close buffer",
-    },
-
-    -- close all buffers
-    ["<leader>bx"] = {
-      function()
-        local current_buf = vim.api.nvim_get_current_buf()
-        local all_bufs = vim.api.nvim_list_bufs()
-
-        for _, buf in ipairs(all_bufs) do
-          if buf ~= current_buf and vim.fn.getbufinfo(buf)[1].changed ~= 1 then
-            vim.api.nvim_buf_delete(buf, { force = true })
-          end
-        end
-      end,
-      " Close all but current buffer",
-    },
-  },
+  -- n = {
+  --   -- cycle through buffers
+  --   ["<S-L>"] = {
+  --     function()
+  --       require("nvchad.tabufline").next()
+  --     end,
+  --     " Goto next buffer",
+  --   },
+  --
+  --   ["<D-l>"] = {
+  --     function()
+  --       require("nvchad.tabufline").prev()
+  --     end,
+  --     " Goto prev buffer",
+  --   },
+  --
+  --   -- close buffer + hide terminal buffer
+  --   ["<C-x>"] = {
+  --     function()
+  --       require("nvchad.tabufline").close_buffer()
+  --     end,
+  --     " Close buffer",
+  --   },
+  --
+  --   -- close all buffers
+  --   ["<leader>bx"] = {
+  --     function()
+  --       local current_buf = vim.api.nvim_get_current_buf()
+  --       local all_bufs = vim.api.nvim_list_bufs()
+  --
+  --       for _, buf in ipairs(all_bufs) do
+  --         if buf ~= current_buf and vim.fn.getbufinfo(buf)[1].changed ~= 1 then
+  --           vim.api.nvim_buf_delete(buf, { force = true })
+  --         end
+  --       end
+  --     end,
+  --     " Close all but current buffer",
+  --   },
+  -- },
 }
 
 M.docker = {
