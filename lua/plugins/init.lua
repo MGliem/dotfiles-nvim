@@ -60,6 +60,7 @@ return {
   },
   {
     "piersolenski/wtf.nvim",
+    commit = "7e6a73f",
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
@@ -67,6 +68,7 @@ return {
     config = function()
       require("wtf").setup {
         popup_type = "popup",
+        provider = "deepseek",
         openai_api_key = "$DEEPSEEK_API_KEY",
         openai_model_id = "deepseek-coder",
         openai_base_url = "https://api.deepseek.com",

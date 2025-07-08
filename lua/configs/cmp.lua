@@ -184,7 +184,7 @@ M.cmp = {
   },
   view = {
     entries = {
-      follow_cursor = true,
+      follow_cursor = false,
     },
   },
   completion = {
