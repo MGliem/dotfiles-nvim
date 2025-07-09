@@ -493,29 +493,7 @@ M.lspsaga = {
   },
 }
 
-M.nvterm = {
-  t = {
-    -- toggle in terminal mode
-    ["<leader>h"] = {
-      function()
-        require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm", size = 0.2 }
-      end,
-      " Toggle horizontal term",
-    },
-    ["<Esc>"] = { [[<C-\><C-c>]], "󰜺 Send SigInt" },
-    ["C-c"] = { [[<C-\><C-c>]], "󰜺 Send SigInt" },
-  },
-
-  -- n = {
-  --   -- toggle in normal mode
-  --   ["<leader>h"] = {
-  --     function()
-  --       require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm", size = 0.2 }
-  --     end,
-  --     " Toggle horizontal term",
-  --   },
-  -- },
-}
+M.nvterm = {}
 
 M.harpoon = {
   n = {

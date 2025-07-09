@@ -1,5 +1,6 @@
 require "nvchad.mappings"
 local map = vim.keymap.set
+local unmap = vim.keymap.del
 local opts = { noremap = true, silent = true, buffer = 0 }
 local silent = { silent = true }
 
@@ -48,12 +49,31 @@ map(
 map("n", "<leader>yy", "<cmd>Telescope yank_history<cr>", { desc = "󰈚 Telescope Yank History" })
 --------------------------------------------------- Buffers --------------------------------------------------
 
----navigate
+--disable nvchads default new buffer
+unmap("n", "<leader>b")
+--disable nchads terminal buffers
+unmap("n", "<leader>h")
+unmap("n", "<leader>v")
+
+map("n", "<leader>ba", "<cmd>enew<cr>", { desc = "󰈚 Add/New buffer" })
+
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "󰈚 Buffer next" })
 map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "󰈚 Buffer previous" })
+map("n", "<leader>bl", "<cmd>blast<cr>", { desc = "󰈚 Buffer last" })
 
----close
 map("n", "<leader>x", "<cmd>bdelete<cr>", { desc = "󰈚 Buffer close" })
+map("n", "<leader>bc", "<cmd>bdelete!<cr>", { desc = "󰈚 Buffer close Forced(!)" })
+
+map("n", "<leader>bx", function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local all_bufs = vim.api.nvim_list_bufs()
+
+  for _, buf in ipairs(all_bufs) do
+    if buf ~= current_buf and vim.fn.getbufinfo(buf)[1].changed ~= 1 then
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+  end
+end, { desc = " Close all but current buffer" })
 
 ---auto-save
 map("n", "<leader>ts", "<cmd>ASToggle<cr>", { desc = "󰈚 Auto-save toggle" })
@@ -71,6 +91,18 @@ map({ "n", "t" }, "<leader>tf", function()
     },
   }
 end, { desc = "terminal toggle floating term" })
+map(
+  "n",
+  "<leader><leader>th",
+  "<cmd>lua require('nvchad.term').toggle { pos = 'horizontal' }<cr>",
+  { desc = "terminal toggle horizontal term" }
+)
+map(
+  "n",
+  "<leader><leader>tv",
+  "<cmd>lua require('nvchad.term').toggle { pos = 'vertical' }<cr>",
+  { desc = "terminal toggle vertical term" }
+)
 --------------------------------------------------- Editor ---------------------------------------------------
 
 map("n", "<leader>pu", function()
