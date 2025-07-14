@@ -8,8 +8,28 @@ return {
     "yetone/avante.nvim",
     event = "VeryLazy",
     version = false, -- set this if you want to always pull the latest change
+    keys = {
+      {
+        "<leader>a+",
+        function()
+          local tree_ext = require "avante.extensions.nvim_tree"
+          tree_ext.add_file()
+        end,
+        desc = "Select file in NvimTree",
+        ft = "NvimTree",
+      },
+      {
+        "<leader>a-",
+        function()
+          local tree_ext = require "avante.extensions.nvim_tree"
+          tree_ext.remove_file()
+        end,
+        desc = "Deselect file in NvimTree",
+        ft = "NvimTree",
+      },
+    },
     opts = {
-      provider = "moonshot",
+      provider = "kimi",
       providers = {
         deepseek = {
           __inherited_from = "openai",
@@ -20,16 +40,15 @@ return {
             max_tokens = 8192,
           },
         },
-        moonshot = {
-          endpoint = "https://api.moonshot.ai/v1",
+        kimi = {
+          __inherited_from = "openai",
           api_key_name = "KIMI_API_KEY",
+          endpoint = "https://api.moonshot.ai/v1",
           model = "kimi-k2-0711-preview",
-          timeout = 30000, -- Timeout in milliseconds
-          extra_request_body = {
-            temperature = 0.75,
-            max_tokens = 32768,
-          },
         },
+      },
+      selector = {
+        exclude_auto_select = { "NvimTree" },
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -58,14 +77,14 @@ return {
           },
         },
       },
-      --   {
-      --     -- Make sure to set this up properly if you have lazy=true
-      --     "MeanderingProgrammer/render-markdown.nvim",
-      --     opts = {
-      --       file_types = { "markdown", "Avante" },
-      --     },
-      --     ft = { "markdown", "Avante" },
-      --   },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
     },
   },
   {
@@ -1368,6 +1387,22 @@ return {
   },
   ----------------------------------------- language plugins ------------------------------------------
   {
+    "code-biscuits/nvim-biscuits",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("nvim-biscuits").setup {
+        cursor_line_only = true,
+        show_on_start = true,
+        default_config = {
+          prefix_string = " 📎 ",
+        },
+      }
+    end,
+  },
+  {
     "davidmh/cspell.nvim",
     enabled = not vim.g.vscode,
     dependencies = { "Joakker/lua-json5" },
@@ -1529,7 +1564,7 @@ return {
   },
   {
     "chrisgrieser/nvim-recorder",
-    keys = { "<leader>qs", "Q" },
+    keys = { "<leader>qs" },
     opts = {
       slots = { "a", "b", "c", "d", "e", "f", "g" },
       mapping = {

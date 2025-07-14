@@ -158,9 +158,6 @@ map({ "n" }, "<ESC>", function()
   vim.cmd "Noice dismiss"
 end, { desc = " Clear highlights" })
 
-map("n", "<leader>q", "<CMD>q<CR>", { desc = "󰗼 Close" })
-map("n", "<leader>qq", "<CMD>qa!<CR>", { desc = "󰗼 Exit" })
-
 -- NvimTree
 map({ "n" }, "<leader>e", "<cmd>Oil<CR>", { desc = "󰔱 Toggle Oil" })
 map({ "n", "i" }, "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle nvimtree" })
