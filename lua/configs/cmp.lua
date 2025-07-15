@@ -189,9 +189,9 @@ M.cmp = {
   },
   completion = {
     completeopt = "menu,menuone,noinsert,noselect",
-    -- autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
+    autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
     -- keyword_length = 1,
-    autocomplete = false,
+    -- autocomplete = false,
   },
   -- experimental = {
   --   ghost_text = {
