@@ -9,7 +9,7 @@ return {
     event = "VeryLazy",
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = "deepseek",
+      provider = "moonshot",
       providers = {
         deepseek = {
           __inherited_from = "openai",
@@ -18,6 +18,16 @@ return {
           model = "deepseek-coder",
           extra_request_body = {
             max_tokens = 8192,
+          },
+        },
+        moonshot = {
+          endpoint = "https://api.moonshot.ai/v1",
+          api_key_name = "KIMI_API_KEY",
+          model = "kimi-k2-0711-preview",
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 32768,
           },
         },
       },
@@ -619,51 +629,51 @@ return {
       }
     end,
   },
-  {
-    "obsidian-nvim/obsidian.nvim",
-    lazy = true,
-    ft = "markdown",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MeanderingProgrammer/render-markdown.nvim",
-      opts = {
-        heading = {
-          sign = false,
-          icons = { " ", " ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
-          width = 79,
-        },
-        code = {
-          sign = false,
-          width = "block", -- use 'language' if colorcolumn is important for you.
-          right_pad = 1,
-        },
-        dash = {
-          width = 79,
-        },
-        pipe_table = {
-          style = "full", -- use 'normal' if colorcolumn is important for you.
-        },
-      },
-    },
-    config = function()
-      require("obsidian").setup {
-        workspaces = {
-          {
-            name = "personal",
-            path = "~/Documents/personal",
-          },
-          {
-            name = "work",
-            path = "~/Documents/work",
-          },
-        },
-        disable_frontmatter = true,
-        completion = {
-          nvim_cmp = true,
-        },
-      }
-    end,
-  },
+  -- {
+  --   "obsidian-nvim/obsidian.nvim",
+  --   lazy = true,
+  --   ft = "markdown",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "MeanderingProgrammer/render-markdown.nvim",
+  --     opts = {
+  --       heading = {
+  --         sign = false,
+  --         icons = { " ", " ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+  --         width = 79,
+  --       },
+  --       code = {
+  --         sign = false,
+  --         width = "block", -- use 'language' if colorcolumn is important for you.
+  --         right_pad = 1,
+  --       },
+  --       dash = {
+  --         width = 79,
+  --       },
+  --       pipe_table = {
+  --         style = "full", -- use 'normal' if colorcolumn is important for you.
+  --       },
+  --     },
+  --   },
+  --   config = function()
+  --     require("obsidian").setup {
+  --       workspaces = {
+  --         {
+  --           name = "personal",
+  --           path = "~/Documents/personal",
+  --         },
+  --         {
+  --           name = "work",
+  --           path = "~/Documents/work",
+  --         },
+  --       },
+  --       disable_frontmatter = true,
+  --       completion = {
+  --         nvim_cmp = true,
+  --       },
+  --     }
+  --   end,
+  -- },
   -- {
   --   "jonahgoldwastaken/copilot-status.nvim",
   --   event = "LspAttach",
@@ -1051,7 +1061,7 @@ return {
     config = function()
       require("gitblame").setup {
         --Note how the `gitblame_` prefix is omitted in `setup`
-        enabled = true,
+        enabled = false,
       }
     end,
   },
@@ -1524,11 +1534,11 @@ return {
   },
   {
     "chrisgrieser/nvim-recorder",
-    keys = { "q", "Q" },
+    keys = { "<leader>qs", "Q" },
     opts = {
       slots = { "a", "b", "c", "d", "e", "f", "g" },
       mapping = {
-        startStopRecording = "q",
+        startStopRecording = "<leader>qs",
         playMacro = "Q",
         editMacro = "<leader>qe",
         switchSlot = "<leader>qt",
