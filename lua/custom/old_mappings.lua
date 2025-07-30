@@ -1,221 +1,28 @@
 local M = {}
 
--- <C> -> Ctrl
--- <leader> -> Space
--- <A> -> alt
--- <S> -> shift
--- <M> -> meta (cmd key on mac)
--- <D> -> super (windows key on windows)
--- <kPoint> -> Keypad Point (.)
--- <kEqual> -> Keypad Equal (=)
--- <kPlus> -> Keypad Plus (+)
--- <kMinus> -> Keypad Minus (-)
-
--- Launch with the current word under the cursor as the search string
--- require('grug-far').grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
--- Launch with the current file as a flag, which limits search/replace to it
--- require('grug-far').grug_far({ prefills = { flags = vim.fn.expand("%") } })
-
-local function plugin_is_loaded(plugin)
-  -- Checking with `require` and `pcall` will cause Lazy to load the plugin
-  local plugins = require("lazy.core.config").plugins
-  return not not plugins[plugin] and plugins[plugin]._.loaded
-end
-
--- Check if there is a code action available at the cursor position
-local function isCodeActionAvailable()
-  local current_bufnr = vim.fn.bufnr()
-  local params = {
-    textDocument = vim.lsp.util.make_text_document_params(),
-    context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() },
-  }
-
-  local actions = vim.lsp.buf_request_sync(current_bufnr, "textDocument/codeAction", params, 1000)
-
-  return actions and next(actions) ~= nil
-end
-
-local diagnostic_ns = vim.api.nvim_create_namespace "hlyank"
-local diagnostic_timer
-local hl_cancel
-
--- local end_strings = {
---   ";",
---   ",",
---   ":",
---   ".",
---   ")",
---   "}",
---   "]",
---   "\\",
--- }
--- for _, char in ipairs(end_strings) do
---   vim.keymap.set("n", "<leader>" .. char, function()
---     func.put_at_end(char)
---   end, { desc = "Put " .. char .. " at the end of the line" })
--- end
-local function put_at_beginning(chars)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  local cline = vim.fn.getline "."
-  ---@diagnostic disable-next-line: param-type-mismatch
-  -- vim.api.nvim_set_current_line(cline:sub(1, cline:len()-1))
-  local pos = vim.api.nvim_win_get_cursor(0)
-  local row = pos[1] - 1
-  local col = 0
-  local entry_length = string.len(chars)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  local start_chars = string.sub(vim.fn.getline ".", 0, entry_length)
-  if start_chars == chars then
-    ---@diagnostic disable-next-line: param-type-mismatch
-    vim.api.nvim_set_current_line(cline:sub((entry_length + 1), cline:len()))
-  else
-    vim.api.nvim_buf_set_text(0, row, col, row, col, { chars })
-  end
-end
-
-local function put_at_end(chars)
-  local pos = vim.api.nvim_win_get_cursor(0)
-  local row = pos[1] - 1
-  local current_line = vim.api.nvim_get_current_line()
-  local col = #current_line
-  local entry_length = string.len(chars)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  local cline = vim.fn.getline "."
-  ---@diagnostic disable-next-line: param-type-mismatch
-  local endchar = vim.fn.getline("."):sub(cline:len() - (entry_length - 1))
-  if endchar == chars then
-    ---@diagnostic disable-next-line: param-type-mismatch
-    vim.api.nvim_set_current_line(cline:sub(1, cline:len() - entry_length))
-  else
-    vim.api.nvim_buf_set_text(0, row, col, row, col, { chars })
-  end
-end
-
----@param direction 'up'|'down'
-local function duplicate_lines(direction)
-  local startline = vim.fn.line "v"
-  local endline = vim.fn.getcurpos()[2]
-
-  -- swap
-  if startline > endline then
-    startline, endline = endline, startline
-  end
-
-  local texts = vim.api.nvim_buf_get_lines(0, startline - 1, endline, true)
-
-  if direction == "up" then
-    vim.api.nvim_buf_set_lines(0, endline, endline, true, texts)
-  elseif direction == "down" then
-    vim.api.nvim_buf_set_lines(0, startline, startline + 1, true, texts)
-  end
-end
-
 M.folder = {}
 
 M.comment = {
-  plugin = false,
+  plugin = true,
 }
 
 M.development = {}
 
 M.text = {
-  i = {
-    -- Move line up and down
-    ["<C-Up>"] = { "<CMD>m .-2<CR>==", "󰜸 Move line up" },
-    ["<C-Down>"] = { "<CMD>m .+1<CR>==", "󰜯 Move line down" },
-
-    -- Navigate
-    ["<A-Left>"] = { "<ESC>I", " Move to beginning of line" },
-    ["<A-Right>"] = { "<ESC>A", " Move to end of line" },
-  },
-
   n = {
     ["J"] = { "mzJ`z", "Join line while keeping the cursor in the same position" },
-    -- ["<LeftRelease>"] = {"*ygv","Yank on mouse selection"},
-    -- Navigate
-    -- ["<F3>"] = { "nzzzv", " Next" },
-    -- ["<S-F3>"] = { "Nzzzv", " Previous" },
-    -- ["<N>"] = { "nzzzv", " Next" }, -- goto_diagnostic_hl('next')
-    -- ["<n>"] = { "Nzzzv", " Previous" }, -- goto_diagnostic_hl('prev')
-    -- Operations
-    -- ["<C-z>"] = { "<CMD>u<CR>", "󰕌 Undo" },
     ["<C-r>"] = { "<CMD>redo<CR>", "󰑎 Redo" },
-    -- ["<BS>"] = { "<C-o>", "Return" },
-    -- ["<C-x>"] = { "x", "󰆐 Cut" },
-    -- ["<C-v>"] = { "p`[v`]=", "󰆒 Paste" },
-    -- ["<C-c>"] = { "y", " Copy" },
-    -- ["p"] = { "p`[v`]=", "󰆒 Paste" },
     ["<leader><leader>p"] = { "printf('`[%s`]', getregtype()[0])", "Reselect last pasted area", expr = true },
-    -- ["<C-Up>"] = { "<CMD>m .-2<CR>==", "󰜸 Move line up" },
-    -- ["<C-Down>"] = { "<CMD>m .+1<CR>==", "󰜯 Move line down" },
-    -- Renamer
-    -- ["<C-R>"] = { "<CMD>:MurenToggle<CR>", "󱝪 Toggle Search" },
     ["<leader>sp"] = { "<CMD>:TSJToggle<CR>", "󰯌 Toggle split/join" },
-    ["dd"] = {
-      function()
-        if vim.api.nvim_get_current_line():match "^%s*$" then
-          return '"_dd'
-        else
-          return "dd"
-        end
-      end,
-      "Smart dd",
-    },
-    ["<leader>rn"] = {
-      function()
-        return ":IncRename " .. vim.fn.expand "<cword>"
-      end,
-      -- ":IncRename "
-      "󰑕 Rename",
-      opts = { expr = true },
-    },
   },
 
   v = {
-    -- ["<C-Up>"] = { ":m'<-2<CR>gv=gv", "󰜸 Move selection up", opts = { silent = true } },
-    -- ["<C-Down>"] = { ":m'>+1<CR>gv=gv", "󰜯 Move selection down", opts = { silent = true } },
-    -- ["<Home>"] = { "gg", "Home" },
-    -- ["<End>"] = { "G", "End" },
     ["y"] = { "y`]", "Yank and move to end" },
     -- Indent backward/forward:
     ["<"] = { "<gv", " Ident backward", opts = { silent = false } },
     [">"] = { ">gv", " Ident forward", opts = { silent = false } },
-
-    -- ["<C-Left>"] = { "<ESC>_", "󰜲 Move to beginning of line" },
-    -- ["<C-Right>"] = { "<ESC>$", "󰜵 Move to end of line" },
-    ["$"] = {
-      function()
-        if vim.fn.mode() == "v" then
-          return "$h"
-        else
-          return "$"
-        end
-      end,
-      "End of line",
-      opts = { expr = true },
-    },
-  },
-
-  c = {
-    -- Autocomplete for brackets:
-    -- ["("] = { "()<left>", "Auto complete (", opts = { silent = false } },
-    -- ["<"] = { "<><left>", "Auto complete <", opts = { silent = false } },
-    -- ['"'] = { '""<left>', [[Auto complete "]], opts = { silent = false } },
-    -- ["'"] = { "''<left>", "Auto complete '", opts = { silent = false } },
   },
 }
-
--- M.go = {
---   n = {
---     ["<leader>fi"] = { " <CMD>:GoImports<CR>", " Format imports", opts = { silent = true } },
---     ["<leader>gif"] = { " <CMD>:GoIfErr<CR>", " Create If Err", opts = { silent = true } },
---     ["<leader>gfs"] = { " <CMD>:GoFillStruct<CR>", " Fill struct", opts = { silent = true } },
---     ["<leader>gcv"] = { " <CMD>:GoCoverage -p<CR>", " Show coverage", opts = { silent = true } },
---     ["<leader>gt"] = { " <CMD>:GoAlt!<CR>", " Go to test", opts = { silent = true } },
---     ["<leader>gca"] = { " <CMD>:GoCodeAction<CR>", " Code action", opts = { silent = true } },
---     ["<leader>cl"] = { " <CMD>:GoCodeLenAct<CR>", " Code Lens", opts = { silent = true } },
---   },
--- }
 
 M.window = {
   n = {
@@ -226,18 +33,6 @@ M.window = {
 
 M.general = {
   n = {
-    -- [";"] = {
-    --   "<CMD>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<CR>",
-    --   "Resume telescope",
-    --   opts = { nowait = true },
-    -- },
-    -- ["<C-c>"] = { "<CMD> Telescope commander<CR>", "󰘳 Find files" },
-
-    -- Keep cursor in the center line when C-D / C-U
-    -- ["<C-d>"] = { "<C-d>zz", " Scroll down", opts = { silent = true } },
-    -- ["<C-u>"] = { "<C-u>zz", " Scroll up", opts = { silent = true } },
-
-    ["<leader>cs"] = { "<CMD>SymbolsOutline<CR>", " Symbols Outline" },
     ["<leader>tr"] = {
       function()
         require("base46").toggle_transparency()
@@ -276,52 +71,10 @@ M.node = {
   },
 }
 
--- Go to breakpoints
--- map('n', ']b', breakpoint.next, 'Go to next breakpoint')
--- map('n', '[b', breakpoint.prev, 'Go to previous breakpoint')
-M.debug = {
-  n = {
-    -- ["<leader>tt"] = { "<CMD>PBToggleBreakpoint<CR>", " Debug: Toggle breakpoint" },
-    ["<F5>"] = { "<CMD>DapContinue <CR>", " Debug: Continue" },
-    ["<F10>"] = { "<CMD>DapStepOver <CR>", " Debug: Step over" },
-    ["<F11>"] = { "<CMD>DapStepInto <CR>", " Debug: Step into" },
-    ["<F9>"] = { "<CMD>DapStepOut <CR>", " Debug: Step out" },
-    ["<leader><leader>dr"] = {
-      function()
-        require("dap").repl.toggle()
-      end,
-      "Debug: Open REPL",
-    },
-    ["<leader><leader>p"] = {
-      function()
-        require("debugprint").debugprint()
-      end,
-      "Debug Print",
-    },
-    ["]b"] = {
-      function()
-        require("goto-breakpoints").next()
-      end,
-      "Debug: Next Breakpoint",
-    },
-    ["[b"] = {
-      function()
-        require("goto-breakpoints").prev()
-      end,
-      "Debug: Previous Breakpoint",
-    },
-    ["]s"] = {
-      function()
-        require("goto-breakpoints").stopped()
-      end,
-      "Debug: Current Breakpoint",
-    },
-  },
-}
+M.debug = {}
 
 M.git = {
   n = {
-    -- ["<leader>gc"] = { "<CMD>Telescope git_commits<CR>", "  Git commits" },
     ["<leader>gb"] = { "<CMD>Telescope git_branches<CR>", "  Git branches" },
     ["<leader>gs"] = { "<CMD>Telescope git_status<CR>", "  Git status" },
     ["<leader>lg"] = { "<CMD>LazyGit<CR>", "  LazyGit" },
@@ -333,12 +86,6 @@ M.git = {
     ["<leader>gvp"] = { "<CMD> DiffviewOpen --cached<CR>", "  Show staged diffs" },
     ["<leader>gvr"] = { "<CMD> DiffviewRefresh<CR>", "  Refresh diff view" },
     ["<leader>gvc"] = { "<CMD> DiffviewClose<CR>", "  Close diff view" },
-
-    -- ["<Leader>gcb"] = { "<CMD>GitConflictChooseBoth<CR>", "Choose both" },
-    -- ["<Leader>gcn"] = { "<CMD>GitConflictNextConflict<CR>", "Move to next conflict" },
-    -- ["<Leader>gco"] = { "<CMD>GitConflictChooseOurs<CR>", "Choose ours" },
-    -- ["<Leader>gcp"] = { "<CMD>GitConflictPrevConflict<CR>", "Move to prev conflict" },
-    -- ["<Leader>gct"] = { "<CMD>GitConflictChooseTheirs<CR>", "Choose theirs" },
 
     ["<Leader>gcb"] = { "<CMD>ConflictMarkerBoth<CR>", "Choose both" },
     ["<Leader>gcn"] = { "<CMD>ConflictMarkerNextHunk<CR>", "Move to next conflict" },
@@ -456,18 +203,9 @@ M.tabufline = {
   -- },
 }
 
-M.docker = {
-  n = {
-    ["<leader>ld"] = { "<CMD> LazyDocker <CR>", "󰡨 Open LazyDocker" },
-  },
-}
+M.docker = {}
 
-M.searchbox = {
-  n = {
-    ["<C-F>"] = { "<CMD> SearchBoxMatchAll clear_matches=true<CR>", "󱘟 Search matching all" },
-    -- ["<A-R>"] = { "<CMD> SearchBoxReplace confirm=menu<CR>", " Replace" },
-  },
-}
+M.searchbox = {}
 
 M.lspsaga = {
   n = {
@@ -483,7 +221,6 @@ M.lspsaga = {
       "󱙼 Hover lsp",
     },
     --  LSP
-    ["gr"] = { "<CMD>Glance references<CR>", " Lsp references" },
     ["<leader>qf"] = {
       function()
         vim.diagnostic.setloclist()
@@ -495,58 +232,7 @@ M.lspsaga = {
 
 M.nvterm = {}
 
-M.harpoon = {
-  n = {
-    ["<leader>ha"] = {
-      function()
-        local harpoon = require "harpoon"
-        harpoon:list():add()
-      end,
-      "󱡁 Harpoon Add file",
-    },
-    ["<leader>ht"] = { "<CMD>Telescope harpoon marks<CR>", "󱡀 Toggle quick menu" },
-    ["<leader>hm"] = {
-      function()
-        local harpoon = require "harpoon"
-        harpoon.ui:toggle_quick_menu(harpoon:list(), {
-          title = "Harpoon btw",
-          title_pos = "center",
-          border = "rounded",
-          ui_width_ratio = 0.40,
-        })
-      end,
-      "󱠿 Harpoon Menu",
-    },
-    ["<leader>1"] = {
-      function()
-        local harpoon = require "harpoon"
-        harpoon:list():select(1)
-      end,
-      "󱪼 Navigate to file 1",
-    },
-    ["<leader>2"] = {
-      function()
-        local harpoon = require "harpoon"
-        harpoon:list():select(2)
-      end,
-      "󱪽 Navigate to file 2",
-    },
-    ["<leader>3"] = {
-      function()
-        local harpoon = require "harpoon"
-        harpoon:list():select(3)
-      end,
-      "󱪾 Navigate to file 3",
-    },
-    ["<leader>4"] = {
-      function()
-        local harpoon = require "harpoon"
-        harpoon:list():select(4)
-      end,
-      "󱪿 Navigate to file 4",
-    },
-  },
-}
+M.harpoon = {}
 
 M.lspconfig = {}
 

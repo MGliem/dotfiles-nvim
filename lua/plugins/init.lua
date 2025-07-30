@@ -1121,11 +1121,6 @@ return {
   --   opts = {},
   -- },
   {
-    "VonHeikemen/searchbox.nvim",
-    cmd = { "SearchBoxMatchAll", "SearchBoxReplace", "SearchBoxIncSearch" },
-    opts = {},
-  },
-  {
     "sindrets/diffview.nvim",
     cmd = "DiffviewOpen",
     config = function()

@@ -97,18 +97,14 @@ M.gitsigns = {
 
 M.plugins = "custom.plugins"
 
--- TODO: Temporary fix for NvChad Mapping changes (I dont wanna edit all my mappings)
 M.mappings = require "custom.old_mappings"
 core.load_mappings "folder"
 core.load_mappings "comment"
 core.load_mappings "development"
 core.load_mappings "text"
--- core.load_mappings "go"
 core.load_mappings "window"
 core.load_mappings "general"
--- core.load_mappings "diagnostics"
 core.load_mappings "node"
--- core.load_mappings "debug"
 core.load_mappings "git"
 core.load_mappings "telescope"
 core.load_mappings "tabufline"
@@ -116,7 +112,6 @@ core.load_mappings "docker"
 core.load_mappings "searchbox"
 core.load_mappings "lspsaga"
 core.load_mappings "nvterm"
--- core.load_mappings "harpoon"
 core.load_mappings "lspconfig"
 
 return M
