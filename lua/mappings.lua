@@ -49,8 +49,6 @@ map(
 map("n", "<leader>yy", "<cmd>Telescope yank_history<cr>", { desc = "󰈚 Telescope Yank History" })
 --------------------------------------------------- Buffers --------------------------------------------------
 
---disable nvchads default new buffer
-unmap("n", "<leader>b")
 --disable nchads terminal buffers
 unmap("n", "<leader>h")
 unmap("n", "<leader>v")
